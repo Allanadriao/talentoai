@@ -20,11 +20,11 @@ export default async function DashboardLayout({
   return (
     <LayoutProvider>
       <LayoutModals />
-      <div className="flex min-h-screen bg-[#F8F9FD] text-slate-900 font-sans">
+      <div className="flex min-h-screen bg-[#F8F9FD] text-slate-900 font-sans overflow-x-hidden">
         <Sidebar />
-        <main className="flex-grow lg:ml-64 w-full">
+        <main className="flex-1 flex flex-col lg:ml-64 min-w-0 w-full transition-all duration-300">
           <Header />
-          <div className="p-4 lg:p-8">
+          <div className="p-4 lg:p-8 flex-1 w-full max-w-full overflow-x-hidden">
             {children}
           </div>
         </main>
