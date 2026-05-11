@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { ShieldAlert, Users, CreditCard, Settings } from 'lucide-react';
@@ -33,21 +34,27 @@ export default async function AdminDashboard() {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <Users className="text-indigo-500 mb-4" size={32} />
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Gestão de Recrutadores</h2>
-            <p className="text-slate-500 text-sm">Gerencie o acesso das empresas e recrutadores que utilizam a plataforma.</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CreditCard className="text-emerald-500 mb-4" size={32} />
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Assinaturas e Pagamentos</h2>
-            <p className="text-slate-500 text-sm">Controle de planos, limites de candidatos e faturamento.</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <Settings className="text-slate-500 mb-4" size={32} />
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Configurações do Sistema</h2>
-            <p className="text-slate-500 text-sm">Ajustes globais do motor de IA e dos testes de perfil.</p>
-          </div>
+          <Link href="/admin/recruiters">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full">
+              <Users className="text-indigo-500 mb-4" size={32} />
+              <h2 className="text-xl font-bold text-slate-800 mb-2">Gestão de Recrutadores</h2>
+              <p className="text-slate-500 text-sm">Gerencie o acesso das empresas e recrutadores que utilizam a plataforma.</p>
+            </div>
+          </Link>
+          <Link href="/admin/billing">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full">
+              <CreditCard className="text-emerald-500 mb-4" size={32} />
+              <h2 className="text-xl font-bold text-slate-800 mb-2">Assinaturas e Pagamentos</h2>
+              <p className="text-slate-500 text-sm">Controle de planos, limites de candidatos e faturamento.</p>
+            </div>
+          </Link>
+          <Link href="/admin/settings">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full">
+              <Settings className="text-slate-500 mb-4" size={32} />
+              <h2 className="text-xl font-bold text-slate-800 mb-2">Configurações do Sistema</h2>
+              <p className="text-slate-500 text-sm">Ajustes globais do motor de IA e dos testes de perfil.</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
