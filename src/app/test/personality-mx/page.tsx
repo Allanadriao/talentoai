@@ -92,7 +92,7 @@ function PersonalityMxContent() {
                   Personality MX • Pergunta {currentStep + 1} de {totalQuestions}
                 </p>
                 <h2 className="text-xl sm:text-2xl font-bold leading-tight text-slate-800">
-                  Marque a opção que melhor te descreve:
+                  {currentQuestion.text || "Marque a opção que melhor te descreve:"}
                 </h2>
               </div>
 
