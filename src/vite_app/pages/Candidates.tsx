@@ -37,7 +37,7 @@ export default function Candidates({
   deleteCandidate
 }: CandidatesProps) {
   
-  const [candidateToShare, setCandidateToShare] = useState<Candidate | null>(null);
+  const [candidateToShare, setCandidateToShare] = useState<Candidate | 'public' | null>(null);
   const [selectedTests, setSelectedTests] = useState<string[]>(AVAILABLE_TESTS.map(t => t.id));
   const [copied, setCopied] = useState(false);
 
@@ -48,14 +48,28 @@ export default function Candidates({
     c.department.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleCopyLink = () => {
+  const handleCopyLink = async () => {
     if (!candidateToShare) return;
     
     const baseUrl = window.location.origin;
-    let link = `${baseUrl}/test?candidate_id=${candidateToShare.id}`;
-    
-    if (selectedTests.length > 0 && selectedTests.length < AVAILABLE_TESTS.length) {
-      link += `&t=${selectedTests.join(',')}`;
+    let link = '';
+
+    if (candidateToShare === 'public') {
+      // Need user id. Let's get it dynamically.
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const userId = user?.id || '';
+
+      link = `${baseUrl}/test/onboarding?r=${userId}`;
+      if (selectedTests.length > 0 && selectedTests.length < AVAILABLE_TESTS.length) {
+        link += `&t=${selectedTests.join(',')}`;
+      }
+    } else {
+      link = `${baseUrl}/test?candidate_id=${candidateToShare.id}`;
+      if (selectedTests.length > 0 && selectedTests.length < AVAILABLE_TESTS.length) {
+        link += `&t=${selectedTests.join(',')}`;
+      }
     }
 
     navigator.clipboard.writeText(link);
@@ -102,6 +116,15 @@ export default function Candidates({
             className="px-4 py-2 text-slate-600 font-bold text-sm border border-slate-200 rounded-xl flex items-center gap-2 hover:bg-slate-50"
           >
             <Download size={18} /> Exportar
+          </button>
+          <button 
+            onClick={() => {
+              setCandidateToShare('public');
+              setSelectedTests(AVAILABLE_TESTS.map(t => t.id));
+            }}
+            className="px-4 py-2 bg-indigo-100 text-indigo-700 font-bold text-sm rounded-xl flex items-center gap-2 hover:bg-indigo-200"
+          >
+            <LinkIcon size={18} /> Link Público
           </button>
           <button 
             onClick={() => setShowForm(true)}
@@ -275,9 +298,14 @@ export default function Candidates({
             >
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-800">Gerar Link Mágico</h3>
+                  <h3 className="text-xl font-bold text-slate-800">
+                    {candidateToShare === 'public' ? 'Gerar Link Público' : 'Gerar Link Mágico'}
+                  </h3>
                   <p className="text-sm text-slate-500 mt-1">
-                    Para <span className="font-semibold text-indigo-600">{candidateToShare.name}</span>
+                    {candidateToShare === 'public' 
+                      ? 'Este link permitirá que qualquer pessoa inicie os testes selecionados e seja adicionada à sua lista de candidatos.'
+                      : <>Para <span className="font-semibold text-indigo-600">{candidateToShare.name}</span></>
+                    }
                   </p>
                 </div>
                 <button 

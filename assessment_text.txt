@@ -1,0 +1,793 @@
+Energy MX
+Razão: 39
+Ação: 34
+Emoção: 37
+Energia: 110
+Vision MX:
+Alien: 16%
+Robô: 48%
+Mamífero: 12%
+Tubarão: 24%
+Personality MX:
+ABERTO: 4
+FECHADO: 6
+TRADICIONAL: 13
+INOVADOR: 7
+PENSADOR: 9
+SENTIMENTO: 11
+DECISIVO: 12
+FLEXÍVEL: 8
+PLAYER MX:
+PRAGMÁTICO: APARENTE: 33% – ATUAL: 20% – SOB PRESSÃO: 30%
+EXPRESSIVO: APARENTE: 7% – ATUAL: 20% – SOB PRESSÃO: 20%
+AFÁVEL: APARENTE: 20% – ATUAL: 33% – SOB PRESSÃO: 30%
+ANALÍTICO: APARENTE: 40% – ATUAL: 27% – SOB PRESSÃO: 20%
+441
+7Energy MX
+Pergunta 1 de 27
+Faça a avaliação na sua vida de um modo geral.
+Escolha de 1 (fraco) a 5 (forte)
+1. Examinar, entender logo, avaliar: Razão
+Escolha de 1 (fraco) a 5 (forte)
+2. Programar, organizar, fazer planos: Ação
+Escolha de 1 (fraco) a 5 (forte)
+3. Espiritualidade, fé: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+4. Espírito humorístico, jogos, brincadeiras: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+5. Argumentar, usar as palavras: Ação
+Escolha de 1 (fraco) a 5 (forte)
+6. Intuição, sexto sentido, ter pressentimentos: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+7. Romantismo, afetividade: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+8. Linguagem verbal, falar bem, transmitir ideias: Ação
+Escolha de 1 (fraco) a 5 (forte)
+9. Uso da linguagem não-verbal, corporal, gestos: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+10. Empatia, colocar-se na situação do outro: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+11. Diagnosticar, conhecer causas com facilidade: Razão
+Escolha de 1 (fraco) a 5 (forte)
+12. Detalhamento, análise, tim-tim por tim-tim: Razão
+Escolha de 1 (fraco) a 5 (forte)
+13. Êxito em negócios: Ação
+Escolha de 1 (fraco) a 5 (forte)
+14. Espírito inovador: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+15. Pensar antes de fazer alguma coisa: Razão
+Escolha de 1 (fraco) a 5 (forte)
+16. Atitude científica, lógica: Razão
+Escolha de 1 (fraco) a 5 (forte)
+17. Habilidades em trabalhos manuais: Ação
+Escolha de 1 (fraco) a 5 (forte)
+18. Esforço, concentração nas tarefas: Ação
+Escolha de 1 (fraco) a 5 (forte)
+19. Capacidade administrativa: Razão
+Escolha de 1 (fraco) a 5 (forte)
+20. Capacidade estética, decoração, bom gosto: Emoção
+Escolha de 1 (fraco) a 5 (forte)
+21. Ser o primeiro a arriscar-se, ser pioneiro: Emção
+Escolha de 1 (fraco) a 5 (forte)
+22. Espírito crítico, questionador: Razão
+Escolha de 1 (fraco) a 5 (forte)
+23. Pensar e fazer, terminar o que começa: Ação
+Escolha de 1 (fraco) a 5 (forte)
+24. Previsões, imaginar o futuro: Razão
+Escolha de 1 (fraco) a 5 (forte)
+25. Uso de aparelhos e máquinas: Ação
+Escolha de 1 (fraco) a 5 (forte)
+26. Rendimento, rapidez no trabalho: Ação
+Escolha de 1 (fraco) a 5 (forte)
+27. Uso de números, fazer contas, cálculos: Razão
+Personality MX
+pergunta 1 de 70
+Teste de Personalidade.
+Marque a opção que melhor te descreve: A / F
+1. Numa festa você:
+Interage com muitos, incluindo estranhos - Aberto Interage com poucos, apenas conhecidos - Fechado
+Marque a opção que melhor te descreve:
+2. Você é mais:
+Realista - Tradicional Filosófico - Inovador
+3. Você se interessa mais por: D / F
+Fatos - Decisivo Semelhanças (comparações) - Flexível
+4. Normalmente você é:
+Justo - Pensador Sensível (interessado) - Sentimento
+5. Você tende ser mais:
+Calculista - Pensador
+Empático - Sentimento
+6. Você prefere trabalhar: D / F
+Na última hora - Decisivo
+A todo tempo - Flexível
+7. Você tende escolher:
+Cuidadosamente - Pensador
+Impulsivamente - Sentimento
+8. Nas festas você:
+Fica até tarde, com muita disposição - Aberto
+Sai cedo, com pouca disposição - Fechado
+9. Você é uma pessoa mais:
+Sensível - Sentimento
+Reflexiva - Pensador
+10. Você é mais inclinado a ser:
+Objetivo - Tradicional
+Abstrato - Inovador
+11. Para você é mais natural ser:
+Justo com os outros - Decisivo
+Agradável - Flexível
+12. Num primeiro contato com os outros, você é:
+Impessoal e desinteressado - Fechado
+Pessoal e interessado - Aberto
+13. Normalmente você é: D / F
+Pontual - Decisivo
+Sossegado - Flexível
+14. Você se incomoda mais em ter coisas:
+Incompletas - Decisivo
+Completas - Flexível
+15. Em seus grupos sociais você:I
+Mantém-se atualizado acerca dos acontecimentos - Inovador
+Fica desatualizado - Tradicional
+16. Normalmente você se interessa mais por: T / I
+Detalhes - Inovador
+Conceitos - Tradicional
+17. Você prefere escritores que: I
+Vão direto ao assunto - Tradicional
+Usam muitas analogias - Inovador
+18. Naturalmente você é mais: P / S
+Imparcial - Pensador
+Compassivo - Sentimento
+19. Num julgamento é mais comum você ser:
+Impessoal - Pensador
+Sentimental - Sentimento
+20. Você normalmente:
+Define as coisas - Decisivo
+Mantém-se aberto às opções - Flexível
+21. Você normalmente prefere:
+Rapidamente concordar com um horário - Aberto
+Relutar em aceitar um horário - Fechado
+22. Ao ligar para alguém você:
+Apenas começa falando - Sentimento
+Prepara o que irá dizer - -Pensador
+23. Fatos:
+Falam por eles mesmos - Tradicional
+Normalmente requer que sejam interpretados - Inovador
+24. Você prefere trabalhar com:
+Informações práticas - Tradicional
+Ideias abstratas - Inovador
+25. Você é mais inclinado a ser uma pessoa:
+Fria - Fechado
+Calorosa - Aberto
+26. Você preferiria ser:
+Mais justo que misericordioso - Pensador
+Mais misericordioso que justo - Sentimento
+27. Você se sente mais confortável:
+Cumprindo um cronograma - Decisivo
+Colocando-as de lado - Flexível
+28. Você se sente mais confortável com:
+Acordos escritos - Decisivo
+Acordos de palavra - Flexível
+29. Quando na companhia de alguém você:
+Inicia as conversas - Aberto
+Espera ser abordado - Fechado
+30. O senso comum tradicional é: I
+Normalmente confiável - Tradicional
+Frequentemente enganoso - Inovador
+31. As crianças normalmente não:
+Fazem-se suficientemente úteis - Pensador
+Sonham o bastante - Sentimento
+32. Você normalmente é mais:
+De caráter forte - Decisivo
+Gentil e simpático - Flexível
+33. Você é mais:
+Firme do que gentil - Decisivo
+Gentil do que firme - Flexível
+34. Você é mais tendencioso a manter as coisas:
+Bem organizadas - Decisivo
+Sem terminar - Flexível
+35. Você dá mais valor ao que é:
+Definitivo - Tradicional
+Mutável - Inovador
+36. Novas interações com outros:
+O estimula e incentiva - Aberto
+Consome suas energias - Fechado
+37. Frequentemente você é:
+Uma pessoa do tipo prática - Tradicional
+Um tipo de pessoa abstrata - Inovador
+38. Qual dos itens se identifica mais com você: F
+Percepção exata e sem enganos - Decisivo
+Formação de conceitos - Flexível
+39. O que é mais realizador:
+Discutir uma questão profundamente - Pensador
+Chegar a um acordo acerca de um assunto - Sentimento
+40. O que te conduz mais:
+Sua cabeça - Pensador
+Seu coração - Sentimento
+41. Você se sente mais confortável com um trabalho:
+Contratado - Tradicional
+Feito de forma casual - Inovador
+42. Você prefere que as coisas sejam: T / I
+Certas e ordenadas - Tradicional
+Opcionais - Inovador
+43. Você prefere: A / F
+Muitos amigos com breves contatos - Aberto
+Poucos amigos com um contato mais longo - Fechado
+44. Você é mais atraído a: I
+Informações substanciais - Inovador
+Suposições confiáveis - Tradicional
+45. Você se interessa mais em: I
+Produção - Tradicional
+Pesquisas - Inovador
+46. Você se sente mais confortável quando está sendo: P / S
+Objetivo - Pensador
+Pessoal - Sentimento
+47. Você se avalia como uma pessoa que é mais: D / F
+Indisposta - Flexível
+Dedicada, esforçada - Decisivo
+48. Você fica mais confortável com uma: D / F
+Opinião final - Decisivo
+Opinião incerta - Flexível
+49. Você fica mais confortável:
+Após uma decisão - Pensador
+Antes de uma decisão - Sentimento
+50. Você: A / F
+Fala fácil e longamente com desconhecidos - Aberto
+Não tem muito que dizer a desconhecidos - Fechado
+51. Você normalmente é mais interessado em: P / S
+Um fato isolado - Pensador
+Um caso geral - Sentimento
+52. Você se sente: T  / I
+Mais prático do que engenhoso - Tradicional
+Mais engenhoso do que prático - Inovador
+53. Você tipicamente é uma pessoa com: P / S
+Claros propósitos - Pensador
+Sentimentos fortes - Sentimento
+54. Você se inclina mais a ser: D / F
+Justo - Decisivo
+Compreensivo - Flexível
+55. É mais preferível: T / I
+Certificar-se de que as coisas estão certas - Tradicional
+Apenas deixar que as coisas aconteçam - Inovador
+56. É mais do seu jeito: D / F
+Deixar as coisas ajeitadas - Decisivo
+Acomodar-se - Flexível
+57. Quando o telefone toca você: D / F
+Corre para atender - Decisivo
+Espera que alguém atenda - Flexível
+58. Você acha que tem mais: T / I
+Um bom senso de realidade - Tradicional
+Uma boa imaginação - Inovador
+59. Você é mais atraído a: P / S
+Fundamentos - Pensador
+Insinuações - Sentimento
+60. Ao julgar você é mais: P / S
+Neutro - Sentimento
+Cuidadoso - Pensador
+61. Você considera a si mesmo uma pessoa: P / S
+Capaz de pensar claramente - Pensador
+De boa intenções - Sentimento
+62. Você é mais tendencioso a: D / F
+Organizar as atividades - Decisivo
+Pegar as coisas quando elas vêm - Flexível
+63. Você é uma pessoa que é mais: T / I
+Sistemática - Tradicional
+Imprevisível - Inovador
+64. Você é mais inclinado a ser:
+De fácil acesso - Aberto
+De certa forma reservado - Fechado
+65. Você se diverte mais com: T / I
+Experiências palpáveis - Tradicional
+Imaginações - Inovador
+66. Você prefere: T / I
+Algo mais literal - Tradicional
+Algo mais figurativo - Inovador
+67. Normalmente você é mais: P / S
+Imparcial - Pensador
+Compassivo - Sentimento
+68. Tipicamente você é mais: P / S
+Justo do que bondoso - Pensador
+Bondoso do que justo - Sentimento
+69. É mais parecido com você: D / F
+Fazer rápidos juízos - Decisivo
+Demorar-se em fazer julgamentos - Flexível
+70. Você tende a ser mais:
+Deliberado do que espontâneo - Decisivo
+Espontâneo do que deliberado - Flexível
+Vision MX
+Perfil:
+Alien: Na visão de mundo, um perfil comportamental denominado "Alien" refere-se a indivíduos que se sentem deslocados ou desconectados do ambiente ao seu redor. Esses profissionais podem ter uma perspectiva única e criativa, mas muitas vezes lutam para se integrar ou se adaptar a normas e expectativas sociais ou organizacionais.
+Principais características:
+Criatividade intensa: Possuem ideias originais e inovadoras, mas podem ter dificuldade em traduzi-las para contextos práticos.
+Dificuldade de adaptação: Podem se sentir deslocados em ambientes convencionais e ter problemas em seguir regras ou estruturas tradicionais.
+Visão alternativa: Tendem a questionar normas estabelecidas e buscar novas maneiras de abordar problemas, o que pode ser tanto uma força quanto uma fraqueza.
+Sensibilidade: Muitas vezes, são mais conscientes de nuances emocionais e sociais, mas podem se sentir sobrecarregados em ambientes altamente competitivos ou rígidos.
+Embora esse perfil possa trazer inovação e novas perspectivas para uma equipe, os "Aliens" podem precisar de suporte e compreensão para se sentirem valorizados e engajados, especialmente em ambientes que valorizam a conformidade e a estrutura.
+----------------------------------------------------------------------------------
+Robô: Na visão de mundo, um perfil comportamental denominado "robô" é caracterizado por uma abordagem extremamente lógica e racional, com foco em seguir processos e regras de forma rigorosa. Esses indivíduos tendem a ser eficientes em tarefas repetitivas, mas podem carecer de flexibilidade e criatividade em situações que exigem adaptação ou improvisação.
+Principais características:
+Rigidez: Seguem procedimentos estabelecidos e podem ter dificuldade em lidar com mudanças ou exceções.
+Foco em dados: Tomam decisões baseadas em informações quantitativas e análises, frequentemente ignorando aspectos emocionais ou subjetivos.
+Comunicação direta: Preferem comunicação clara e objetiva, evitando ambiguidades ou nuances emocionais.
+Baixa empatia: Podem ter dificuldade em entender e responder a sentimentos e emoções dos outros.
+----------------------------------------------------------------------------------
+Mamífero: Na visão de mundo, um perfil comportamental denominado "mamífero" é caracterizado por uma abordagem adaptativa, colaborativa e empática em relação ao trabalho e às interações sociais. Esses indivíduos tendem a se sentir confortáveis em ambientes dinâmicos e valorizam a comunicação aberta e a construção de relacionamentos.
+Principais características:
+Flexibilidade: Estão abertos a mudanças e se adaptam rapidamente a novas situações ou desafios.
+Colaboração: Valorizam o trabalho em equipe e a troca de ideias, buscando construir um ambiente de apoio mútuo.
+Empatia: Têm facilidade em entender e responder às emoções dos outros, promovendo conexões interpessoais.
+Aprendizado contínuo: Buscam constantemente se desenvolver, seja por meio de novas experiências, feedbacks ou formação.
+Esse perfil é bem-sucedido em contextos que exigem inovação e adaptação, sendo capaz de fomentar um ambiente positivo e criativo. Profissionais com essa mentalidade tendem a ser mais engajados e motivados, contribuindo para a cultura organizacional de forma significativa.
+----------------------------------------------------------------------------------
+Tubarão: Na visão de mundo, um perfil comportamental denominado "tubarão" é caracterizado por uma abordagem agressiva, competitiva e orientada para resultados. Esses indivíduos têm uma forte ambição e buscam constantemente alcançar objetivos, muitas vezes em ambientes desafiadores.
+Principais características:
+Ambição: São motivados por metas e objetivos, buscando sempre a excelência e o sucesso.
+Competitividade: Encaram desafios como oportunidades de superação e tendem a ser assertivos na busca por vantagem.
+Tomada de decisão rápida: Costumam agir de forma decisiva, avaliando rapidamente as situações e tomando iniciativas.
+Foco em resultados: Priorizam a eficiência e a produtividade, frequentemente medindo seu sucesso com base em resultados tangíveis.
+Embora esse perfil possa trazer energia e dinamismo para uma equipe, também pode resultar em tensão se não houver um equilíbrio com a colaboração e a empatia. Profissionais com essa mentalidade podem se destacar em ambientes altamente competitivos, mas podem precisar desenvolver habilidades interpessoais para evitar conflitos e promover um ambiente de trabalho saudável.
+Pergunta 1 de 25
+1. Marque com um X a opção com a qual você mais se identificar:
+A - Idealismo - Alien B - Meticulosidade - Robô C - Diversão - Mamífero D – Persistência - Tubarão
+2. Marque com um X a opção com a qual você mais se identificar:
+A - Inovação - Alien B - Organização - Robô C - Cuidado - Mamífero D – Tarefa - Tubarão
+3. Marque com um X a opção com a qual você mais se identificar:
+A - Curiosidade - Alien B - Planejamento - Robô C - Relacionamento - Mamífero D – Direção - Tubarão
+4. Marque com um X a opção com a qual você mais se identificar:
+A - Complexidade - Alien B - Sistematização - Robô C - Animação - Mamífero D - Objetividade - Tubarão
+5. Marque com um X a opção com a qual você mais se identificar:
+A - Descobertas - Alien B - Previsão - Robô C - Naturalidade - Mamífero D - Determinação - Tubarão
+6. Marque com um X a opção com a qual você mais se identificar:
+A - Questionamento - Alien B - Detalhamento - Robô C - Participação - Mamífero D - Impulsividade - Tubarão
+7. Marque com um X a opção com a qual você mais se identificar:
+A - Liberdade - Alien B - Controle - Robô C - Compreensão - Mamífero D - Impaciência - Tubarão
+8. Marque com um X a opção com a qual você mais se identificar:
+A - Revolução - Alien B - Lógica - Robô C - Tradição - Mamífero D - Quantidade - Tubarão
+9. Marque com um X a opção com a qual você mais se identificar:
+A - Escolha - Alien B - Melhoria - Robô C - Lazer - mamífero D - Autonomia - Tubarão
+10. Marque com um X a opção com a qual você mais se identificar:
+A - Independência B - Acúmulo C - Assistência D - Empreendimento
+11. Marque com um X a opção com a qual você mais se identificar:
+A - Antecipação B - Regras C - Acordo D - Persistência
+12. Marque com um X a opção com a qual você mais se identificar:
+A - Criatividade B - Pontualidade C - Parceria D - Vantagem
+13. Marque com um X a opção com a qual você mais se identificar:
+A - Aventura B - Ordem C - Cooperação D - Execução
+14. Marque com um X a opção com a qual você mais se identificar:
+A - Despreocupação B - Estratégia C - Percurso D - Chegada
+15. Marque com um X a opção com a qual você mais se identificar:
+A - Inconstância B - Consistência C - Liderado D – Líder
+16. Marque com um X a opção com a qual você mais se identificar:
+A - Irrelevância B - Irritabilidade C - Socialização D - Facilidade
+17. Marque com um X a opção com a qual você mais se identificar:
+A - Novidade B - Comando C - Solidariedade D - Atuação
+18. Marque com um X a opção com a qual você mais se identificar:
+A - Desconfiança B - Prevenção C - União D - Ataque
+19. Marque com um X a opção com a qual você mais se identificar:
+A - Mudança B - Rotina C - Amizade D - Produtividade
+20. Marque com um X a opção com a qual você mais se identificar:
+A - Mistério B - Compensação C - Reencontro D – Pressa
+21. Marque com um X a opção com a qual você mais se identificar:
+A - Estranheza B - Perfeição C - Envolvimento D - Foco
+22. Marque com um X a opção com a qual você mais se identificar:
+A - Eficácia B - Perícia C - Experiência D - Sucesso
+23. Marque com um X a opção com a qual você mais se identificar:
+A - Multiplicidade B - Cautela C - Conjunto D - Competição
+24. Marque com um X a opção com a qual você mais se identificar:
+A - Polêmica B - Prudência C - Coletividade D - Persistência
+25. Marque com um X a opção com a qual você mais se identificar:
+A - Coletividade B - Gradativo C - Justiça D - Firmeza
+Player MX
+Comportamento Aparente
+Comportamento Atual
+Comportamento Sob Pressão
+Pragmático: adota uma abordagem prática e orientada para resultados em sua vida e nas interações diárias. Esse tipo de indivíduo valoriza a eficiência e a aplicabilidade das soluções, focando no que funciona na prática em vez de se perder em teorias ou ideais.
+Expressivo: se destaca pela habilidade de comunicar emoções e ideias de maneira clara e envolvente. Esse tipo de profissional geralmente utiliza a comunicação verbal e não verbal de forma eficaz, criando conexões significativas com os outros e influenciando positivamente o ambiente de trabalho.
+Afável: se destaca por sua natureza amigável, colaborativa e empática. Esses indivíduos costumam ser acessíveis, valorizando relacionamentos interpessoais e criando um ambiente de trabalho positivo.
+Analítico: caracterizado por uma abordagem lógica e estruturada para resolver problemas e tomar decisões. Profissionais com esse perfil tendem a valorizar dados, fatos e análises profundas, buscando entender as situações em detalhes antes de agir.
+pergunta 1 de 40
+1. Preencha como você realmente é: atual
+A - Animado - Expressivo B - Aventureiro - Pragmático      l C - Analítico - Analítico D - Adaptável - Afável
+2. Preencha como você realmente é: atual
+A - Estimulante - Expressivo B - Habilidoso - Pragmático C - Respeitoso - Afável D – Reservado - Analítico
+3. Preencha como você realmente é: pressão
+A - Otimista - Expressivo B - Franco - Analítico C - Ordeiro - Pragmático D - Serviçal - Afável
+4. Preencha como você realmente é: atual
+A - Inspirador - Expressivo B - Independente - Pragmático C - Idealista - Analítico D - Inofensivo - Afável
+5. Preencha como você realmente é: atual
+A - Vivo - Expressivo B - Líder - Pragmático C - Leal - Afável D - Ouvinte - Analítico
+6. Preencha como você realmente é: aparente
+A - Metido - Expressivo  B - Mandão - Pragmático C - Acanhado - Afável D - Vazio - Analítico
+7. Preencha como você realmente é: pressão
+A - Inoportuno - Expressivo  B - Impaciente - Pragmático C - Inseguro - Afável D - Indeciso - Analítico
+8. Preencha como você realmente é: pressão
+A - Esquentado - Expressivo  B - Discutidor - Pragmático C - Alienado - Analítico D - Incerto - Afável
+9. Preencha como você realmente é: aparente
+A - Desorganizado - Expressivo  B - Mandão - Pragmático C - Deprimido - Afável D - Confuso - Analítico
+10. Preencha como você realmente é: atual
+A - Barulhento - Expressivo  B - Tirânico - Pragmático C - Solitário - Analítico D - Preguiçoso - Afável
+11. Preencha como você realmente é: aparente
+A - Brincalhão - Expressivo  B - Persuasivo - Pragmático C - Persistente - Analítico D - Sereno - Afável
+12. Preencha como você realmente é: aparente
+A - Espirituoso - Expressivo  B - Auto-Suficiente - Pragmático C - Sensível - Afável D - Satisfeito - Analítico
+13. Preencha como você realmente é: atual
+A - Engraçado - Expressivo  B - Vigoroso - Pragmático C - Fiel - Afável D - Amigável - Analítico
+14. Preencha como você realmente é: atual
+A - Demonstrativo - Expressivo  B - Decidido - Pragmático C - Profundo - Afável D - Irônico - Analítico
+15. Preencha como você realmente é: aparente
+A - Atraente - Expressivo  B - Chefe - Pragmático C - Detalhista - Analítico D - Contente - Afável
+16. Preencha como você realmente é: pressão
+A - Indisciplinado - Expressivo  B - Insensível - Pragmático C - Rancoroso - Afável D - Desinteressado - Analítico
+17. Preencha como você realmente é: atual
+A - Imprevisível - Expressivo  B - Frio - Pragmático C - Impopular - Analítico D - Desligado - Afável
+18. Preencha como você realmente é: aparente
+A - Ingênuo - Afável B - Ousado - Pragmático C - Negativo - Expressivo  D - Indiferente - Analítico
+19. Preencha como você realmente é: pressão
+A - Inconstante - Pragmático B - Intolerante - Expressivo  C - Introvertido - Analítico D - Apático - Afável
+20. Preencha como você realmente é: atual
+A - Distraído - Analítico B - Irritável - Pragmático C - Desconfiado - Expressivo  D - Vagaroso - Afável
+21. Preencha como você realmente é: aparente
+A - Sociável - Expressivo  B - Energético - Pragmático C - Doador - Analítico D - Submisso - Afável
+22. Preencha como você realmente é: aparente
+A - Charmoso - Expressivo  B - Positivo - Pragmático C - Planejador - Analítico D - Paciente - Afável
+23. Preencha como você realmente é: aparente
+A - Encantador - Expressivo  B - Audacioso - Pragmático C - Minucioso - Analítico D - Diplomático - Afável
+24. Preencha como você realmente é: atual
+A - Desembaraçado - Expressivo  B - Ativo - Pragmático C - Musical - Analítico D - Mediador - Afável
+25. Preencha como você realmente é: aparente
+A - Popular - Expressivo  B - Produtivo - Pragmático C - Perfeccionista - Analítico D - Agradável - Afável
+26. Preencha como você realmente é: pressão
+A - Repetitível - Expressivo B - Inflexível - Pragmático C - Ressentido - Afável
+D - Relutante - Analítico
+27. Preencha como você realmente é: pressão
+n  A - Casual - Afável B - Cabeçudo - Pragmático C - Insatisfeito - Analítico D - Exitante - Expressivo
+28. Preencha como você realmente é: pressão
+n  A - Egoísta - Afável B - Trabalhador - Pragmático C - Retraído - Analítico D - Preocupado - Expressivo
+29. Preencha como você realmente é: pressão
+A - Desordenado - Pragmático B - Manipulador - Analítico  C - Triste - Afável D - Resmungão - Expressivo
+30. Preencha como você realmente é: pressão
+A - Agitado - Expressivo
+B - Imprudente - Pragmático C - Vingativo - Afável D - Relutante - Analítico
+31. Preencha como você realmente é: aparente
+A - Convincente - Expressivo B - Competitivo - Pragmático C - Atencioso - Afável D - Controlado - Analítico
+32. Preencha como você realmente é: aparente
+n  A - Espontâneo - Expressivo B - Seguro - Pragmático C - Organizado - Analítico  D - Tímido - Afável
+33. Preencha como você realmente é: atual
+n  A - Alegre - Expressivo B - Confiante - Pragmático C - Culto - Analítico  D - Previsível - Afável
+34. Preencha como você realmente é: Atual
+n  A - Conversador - Expressivo B - Firme - Pragmático C - Pensativo - Analítico   D - Tolerante - Afável
+35. Preencha como você realmente é: atual
+n  A - Vivaz - Expressivo B - Valente - Pragmático C - Comportado - Afável D - Equilibrado - Analítico
+36. Preencha como você realmente é: aparente
+n  A - Esquecido - Expressivo B - Franco - Pragmático C - Complicado - Analítico  D - Medroso - Afável
+37. Preencha como você realmente é: atual
+n  A - Permissivo - Afável B - Orgulhoso - Pragmático C - Cauteloso - Analítico  D - Simples - Expressivo
+38. Preencha como você realmente é: aparente
+n  A - Tagarela - Expressivo B - Indelicado - Pragmático C - Sensível demais - Afável D - Tímido - Analítico
+39. Preencha como você realmente é: atual
+A - Convencido - Expressivo B - Obstinado - Pragmático C - Cético (não acreditar) - Analítico  D - Lento - Afável
+40. Preencha como você realmente é: aparente
+A - Instável - Expressivo B - Astuto - Pragmático C - Crítico - Analítico  D - Acomodado - Afável
+Power MX
+Pergunta 1 de 180
+Selecione entre 0 a 10, sendo 0 que não tem nenhuma semelhança com você e 10 sendo totalmente você.
+1. Me esforço muito para corrigir minhas falhas. - 1
+2. Me aborreço quando vejo que as coisas não são como deveriam ser. 1
+3. Odeio perder tempo. 3
+4. Sempre me culpo por não ter feito o melhor. 1
+5. A mínima falha pode arruinar a coisa toda para mim. 1
+6. Tenho dificuldade em relaxar e ser brincalhão. 1
+7. Ouço com frequência, na minha cabeça, vozes me criticando ou criticando outros. 1
+8. Pareço preocupar-me mais do que as outras pessoas. 6
+9. Me sinto forçado a ser honesto. 1
+10. Às vezes me acho muito certinho. 1
+11. É importante para mim ser direto. 8
+12. Frequentemente me apresso sentindo que não tenho muito tempo para o muito que tenho que fazer. 3
+13. Eu sou, ou poderia facilmente ser uma pessoa de confiança. 6
+14. Preciso sentir-me responsável a maior parte do tempo. 6
+15. Posso facilmente identificar-me com campanhas contra o mal. 6
+16. Se uma coisa não é justa, ela realmente me incomoda. 1
+17. Sinto-me forçado a me melhorar e ao que estou fazendo. 1
+18. Preciso ser perfeito para ser amado e validado. 3
+19. Sinto-me frustrado porque nem eu nem os outros somos o que deveríamos ser. 1
+20. Vejo as coisas em termos de certo ou errado, bom ou mau. 1
+21. Muitas pessoas dependem da minha ajuda e generosidade. 2
+22. Sinto orgulho mais em servir aos outros do que qualquer outra coisa. 2
+23. Necessito ser importante na vida dos outros. Gosto que as pessoas precisem de mim. 2
+24. Muitas pessoas sentem-se apegadas a mim. 2
+25. Normalmente elogio outra pessoa. 2
+26. Gosto de ajudar pessoas quando as vejo com problemas ou numa situação embaraçosa. 2
+27. Me sinto forçado a ajudar outras pessoas, quer queira, quer não. 2
+28. As pessoas vêm a mim por uma palavra de consolo ou conselho. 2
+29. Muitas vezes sinto uma sobrecarga de dependência dos outros sobre mim. 2
+30. Não sinto que eu tenha tantas necessidades. 5
+31. Às vezes sinto que os outros não me apreciam por aquilo que fiz por eles. 2
+32. Gosto de me sentir próximo das pessoas. 2
+33. Às vezes me sinto enganado pelas pessoas, como sendo usado por elas. 2
+34. Amar e ser amado são as coisas mais importantes da vida. 2
+35. Descargas emocionais são importantes para mim. 4
+36. Sinto que mereço ser o primeiro na vida de alguém, por tudo que fiz por ele. 2
+37. Me considero uma pessoa importante e criativa. 4
+38. Sempre que tenho uma folga, uso-a ajudando os outros. 2
+39. Me comunico com meus amigos com mais frequência do que eles se comunicam comigo. 2
+40. Gosto de cuidar dos outros. 2
+41. Gosto de me manter ativo. 7
+42. Gosto de trabalhar em equipe e me considero um bom membro de equipe. 6
+43. Gosto de trabalhar com precisão e profissionalismo. 3
+44. Organizar e terminar tarefas é uma coisa natural para mim. 3
+45. A palavra sucesso significa muito para mim. 3
+46. Gosto de ter metas definidas e saber quais as minhas chances para alcançá-las. 3
+47. Gosto de mapas de estatística, ou outras indicações para saber como estou progredindo. 5
+48. Sou invejado, pelo muito que já consegui. 3
+49. Para mim, não é problema tomar decisões. 8
+50. Projetar uma imagem bem-sucedida é muito importante. 3
+51. Para se atingir o sucesso, precisamos muitas vezes sacrificar nosso padrão de conduta. 8
+52. Do passado, procuro me lembrar do que fiz bem e de forma correta mais do que aquilo que fiz mal e incorretamente. 4
+53. Odeio quando dizem que o que estou fazendo não funciona. 8
+54. Prefiro trabalhar em organizações que requeiram mudanças do que requeiram continuidade. 8
+55. Me sairia bem no aspecto informativo de um projeto. 5
+56. Posso me identificar tanto com o trabalho ou com o papel que desempenho que até mesmo me esqueço de quem eu sou realmente. 4
+57. Acho a aparência de uma pessoa importante. 3
+58. Acho que preciso realizar muito mais para que as pessoas me notem. 3
+59. Sou o tipo da pessoa com energia positiva. 7
+60. A primeira impressão é a que conta. 3
+61. A maioria das pessoas não aprecia a verdadeira beleza da vida. 4
+62. Tenho uma nostálgica compulsão pelo meu passado. 4
+63. Tento parecer casual e natural. 4
+64. Sempre tive atração pelo simbolismo. 4
+65. As pessoas não sentem tão profundamente quanto eu. 4
+66. As outras pessoas não têm capacidade de entender como me sinto. 4
+67. Gosto de fazer as coisas corretamente e com classe. 3
+68. O meio ambiente que me cerca é muito importante para mim. 2
+69. Gosto muito de teatro e me imagino em cena. 4
+70. Boas maneiras e bom gosto são importantes para mim. 1
+71. Não gosto de pensar em mim como uma pessoa comum. 4
+72. Posso ficar preocupado com o sofrimento, a perda e a morte. 6
+73. A minha reação nunca é suficiente. 1
+74. Absorvo com tanta facilidade os sentimentos de um grupo, que frequentemente perco a noção de onde terminam meus sentimentos e onde começam os dos outros. 2
+75. Me preocupo, mais do que os outros, com o término de um relacionamento. 2
+76. Me identifico com a figura de um "palhaço trágico" sorrindo na escuridão. 4
+77. Têm me acusado de ser diferente. 4
+78. Me deparo balançando para frente e para trás, entre altos e baixos; ou estou para cima ou para baixo. Não me sinto vivo quando me situo no centro. As coisas mornas não me atraem. 4
+79. As pessoas me acusam de ser superdramático, mas na verdade elas não compreendem como me sinto. 4
+80. As artes e as expressões artísticas são muito importantes para mim como um meio de canalizar as minhas emoções. 4
+81. Guardo meus sentimentos para mim mesmo. 5
+82. Guardo tudo o que tenho e junto artigos que um dia talvez possa usar. 5
+83. Não sei muito bem manter conversas superficiais. 5
+84. Intelectualmente gosto de sintetizar e de juntar idéias diferentes. 5
+85. Me dá um branco quando eu me embaraço ou quando alguém pergunta como estou me sentindo agora. 6
+86. Preciso de muito tempo e espaço privado. 4
+87. Deixo os outros tomarem a iniciativa. 9
+88. Prefiro sentar atrás, observar as pessoas e não me envolver. 5
+89. Gosto de ficar sozinho. 4
+90. Pareço ser mais quieto do que os outros. As pessoas sempre me perguntam no que estou pensando. 5
+91. Tenho dificuldade de conseguir ou pedir o que necessito. 6
+92. Quando aparece uma publicação nova, gosto de examiná-la primeiro para depois discuti-la com os outros. 5
+93. Sinto dificuldade em me afirmar. 6
+94. Tento resolver os meus problemas pensando. 5
+95. Gosto de pôr as coisas em perspectiva, dar um passo atrás e recolher tudo. Se algo me escapa, me culpo por ser tão simplista e ingênuo. 5
+96. Sou mesquinho com o meu tempo, meu dinheiro e comigo mesmo. 5
+97. Odeio quando fico sem dinheiro. 5
+98. Quando fico aborrecido, considero os outros e a mim mesmo como tolos, idiotas, burros, etc. 1
+99. Tenho o tom de voz baixo e as pessoas sempre me pedem para falar mais alto. Isso me irrita. 6
+100. Sou mais um tomador do que um doador. 3
+101. Sou basicamente uma pessoa de intermediação. 9
+102. Lealdade ao grupo é muito mais importante para mim. 6
+103. Acho difícil contrariar o que diz a autoridade. 6
+104. Antes de tomar uma decisão, preciso de informações adicionais para certificar-me de que estou preparado. 5
+105. Levo muito tempo para me decidir porque preciso explorar inteiramente as opções. 5
+106. Às vezes duvido que eu tenha coragem bastante para fazer o que precisa ser feito. 6
+107. Frequentemente sou atacado pela dúvida. 6
+108. Gosto de estar inteiramente certo antes de agir. 1
+109. Sem leis estritas é difícil dizer o que as pessoas podem fazer. 1
+110. Minha tendência é subir à custa do senso do dever e da responsabilidade. 3
+111. Gosto de demarcações no trabalho.1
+112. Pressinto o perigo e a ameaça mais do que os outros. 6
+113. Demarco lados e questiono de que lado as pessoas estão. 8
+114. Estou atento e sensível às contradições. 5
+115. Prefiro ter as coisas esquematizadas do que em aberto. 1
+116. Frequentemente avalio se as pessoas são ou não são uma ameaça para mim. 6
+117. Ser cuidadoso é muito importante para mim. 1
+118. Pareço estar constantemente lutando ou desafiando meus medos. 6
+119. Pareço estar sempre defendendo a mim e a minha posição mais do que as outras pessoas. 8
+120. Frequentemente me fantasio no papel de algum herói ou me coloco em algum posto elevado. 4
+121. Tenho menos suspeita das pessoas e dos seus motivos do que as outras pessoas têm. 9
+122. Existem poucas coisas na vida que não posso desfrutar. 7
+123. As coisas saem sempre para melhor. 7
+124. Gostaria que as pessoas fossem menos preocupadas com as coisas. 6
+125. Gosto que as pessoas me vejam como um ser feliz. 7
+126. Geralmente encaro as coisas mais pelo lado alegre do que pelo lado negativo. 7
+127. Gosto de quase todo mundo que encontro. 9
+128. Gosto de me considerar uma pessoa infantil e brincalhona. 9
+129. Gosto de contar histórias e piadas. 7
+130. As pessoas dizem que sou a alegria da festa. 7
+131. Levo em consideração as ramificações cósmicas dos acontecimentos e a importância universal de tudo o que acontece. 5
+132. Minha teoria é: se alguma coisa é boa , mais é melhor. 7
+133. Acho que não é bom ficar triste por muito tempo. 7
+134. Gosto de fazer com que as coisas fiquem legais. 7
+135. Gosto de saborear a vida. 7
+136. Sou muito entusiasta acerca do futuro. 7
+137. Gosto de alegrar as pessoas e levantar-lhes a moral. 7
+138. Na maioria das vezes evito entrar em situações pesadas. 9
+139. Gosto mais de pular de uma coisa para outra. 7
+140. Lembro-me da minha infância feliz. 7
+141. Sou bom em enfrentar e lutar pelo que quero. 8
+142. Descubro facilmente o ponto fraco do outro e o uso se for provocado. 8
+143. Não tenho dificuldade de expressar minha insatisfação pelas coisas. 8
+144. Não temo em me confrontar com outras pessoas e na verdade eu as enfrento. 8
+145. Gosto de desfrutar do poder. 8
+146. Sei descobrir onde está o poder de um grupo. 8
+147. Sou uma pessoa agressiva e determinada. 8
+148. Sei como fazer as coisas. 3
+149. Tenho problemas em aceitar e expressar meu lado gentil, terno e dócil. 8
+150. Me aborreço facilmente e gosto de me manter ativo. 7
+151. A justiça e a injustiça são problemas chaves para mim. 8
+152. Protejo as pessoas que estão sob minha responsabilidade e jurisdição. 8
+153. Tenho os pés no chão. 3
+154. Não sou afeito à introspecção e à auto-análise. 3
+155. Me considero um não-conformista. 6
+156. Não gosto de ficar na defensiva, contido, intimidado. 8
+157. Não gosto que me mandem me adaptar às situações. 8
+158. Me considero um bom trabalhador. 3
+159. Não consigo deixar as coisas como estão. 3
+160. Acho que as outras pessoas criam seus próprios problemas. 8
+161. A maior parte das pessoas se envolvem com as coisas. 7
+162. Muitas coisas na vida não valem o aborrecimento. 7
+163. Estou sempre em paz e calmo. 9
+164. Sou uma pessoa extremamente fácil de se lidar. 9
+165. Gosto quando não tenho nada para fazer. 9
+166. Não me recordo de ter problemas para dormir. 9
+167. Embora haja alguma diferença, creio que a maioria das pessoas são muito parecidas. 9
+168. Geralmente não me entusiasmo demais com as coisas. 9
+169. Não há nada tão urgente que não possa esperar até amanhã. 9
+170. Necessito de estímulo externo para manter-me vivo. 7
+171. Não gosto de gastar minha energia à toa. Busco coisas onde posso resguardar minha energia. 5
+172. Em geral não me preocupo com nada. 9
+173. Posso ser um árbitro desapaixonado porque um lado é tão bom quanto o outro. 9
+174. Não gosto de me sentir inseguro. 6
+175. Geralmente sigo a linha do mínimo esforço. 9
+176. Me orgulho em ser uma pessoa estável. 9
+177. Minimizo as coisas para sossegar as outras pessoas. 9
+178. Não considero que eu tenha aquela importância. 9
+179. Não consigo ouvir e prestar atenção. 5
+180. Concordo com a declaração: Por que ficar de pé se posso sentar. 9
+Personality MX 2
+pergunta 1 de 70
+Selecione de 1 a 10 de acordo com o que mais combina com sua personalidade
+1. Numa festa você:
+Interage com muitos, incluindo estranhos  1  2  3  4  5  6  7  8  9  10 Interage com poucos, apenas conhecidos
+2. Você é mais:
+Realista  1  2  3  4  5  6  7  8  9  10 Filosófico
+3. você se interessa mais por:
+Fatos  1  2  3  4  5  6  7  8  9  10 Semelhanças (comparações)
+4. Normalmente você é:
+Justo  1  2  3  4  5  6  7  8  9  10 Sensível (interessado)
+5. Você tende ser mais:
+Calculista  1  2  3  4  5  6  7  8  9  10 Empático
+6. Você prefere trabalhar:
+Na última hora  1  2  3  4  5  6  7  8  9  10 A todo tempo
+7. Você tende escolher:
+Cuidadosamente  1  2  3  4  5  6  7  8  9  10 Impulsivamente
+8. Nas festas você:
+Fica até tarde, com muita disposição  1  2  3  4  5  6  7  8  9  10 Sai cedo, com pouca disposição
+9. Você é uma pessoa mais:
+Sensível  1  2  3  4  5  6  7  8  9  10 Reflexiva
+10. Você é mais inclinado a ser:
+Objetivo  1  2  3  4  5  6  7  8  9  10 Abstrato
+11. Para você é mais natural ser:
+Justa com os outros  1  2  3  4  5  6  7  8  9  10 Agradável
+12. Num primeiro contato com os outros, você é:
+Impessoal e desinteressado  1  2  3  4  5  6  7  8  9  10 Pessoal e interessado
+13. Normalmente você é:
+Pontual  1  2  3  4  5  6  7  8  9  10 Sossegado
+14. Você se incomoda mais em ter coisas:
+Incompletas  1  2  3  4  5  6  7  8  9  10 Completas
+15. Em seus grupos sociais você:
+Mantém-se atualizado acerca dos acontecimentos  1  2  3  4  5  6  7  8  9  10 Fica desatualizado
+16. Normalmente você se interessa mais por:
+Detalhes  1  2  3  4  5  6  7  8  9  10 Conceitos
+17. Você prefere escritores que:
+Vão direto ao assunto  1  2  3  4  5  6  7  8  9  10 Usam muitas analogias
+18. Naturalmente você é mais:
+Imparcial  1  2  3  4  5  6  7  8  9  10 Compassivo
+19. Num julgamento é mais comum você ser:
+Impessoal  1  2  3  4  5  6  7  8  9  10 Sentimental
+20. Você normalmente:
+Define as coisas  1  2  3  4  5  6  7  8  9  10 Mantém-se aberto às opções
+21. Você normalmente prefere:
+Rapidamente concordar com um horário  1  2  3  4  5  6  7  8  9  10 Relutar em aceitar um horário
+22. Ao ligar para alguém você:
+Apenas começa falando  1  2  3  4  5  6  7  8  9  10 Prepara o que irá dizer
+23. Fatos
+Falam por eles mesmos  1  2  3  4  5  6  7  8  9  10 Normalmente requer que sejam interpretados
+24. Você prefere trabalhar com:
+Informações práticas  1  2  3  4  5  6  7  8  9  10 Ideias abstratas
+25. Você é mais inclinado a ser uma pessoa:
+Fria  1  2  3  4  5  6  7  8  9  10 Calorosa
+26. Você preferiria ser:
+Mais justo que misericordioso  1  2  3  4  5  6  7  8  9  10 Mais misericordioso que justo
+27. Você se sente mais confortável
+Cumprindo um cronograma  1  2  3  4  5  6  7  8  9  10 Colocando-as de lado
+28. Você se sente mais confortável com:
+Acordos escritos  1  2  3  4  5  6  7  8  9  10 Acordos de palavra
+29. Quando na companhia de alguém você:
+Inicia as conversas  1  2  3  4  5  6  7  8  9  10 Espera ser abordado
+30. O senso comum tradicional é:
+Normalmente confiável  1  2  3  4  5  6  7  8  9  10 Frequentemente enganoso
+31. As crianças normalmente não:
+Fazem-se suficientemente úteis  1  2  3  4  5  6  7  8  9  10 Sonham o bastante
+32. Você normalmente é mais:
+De caráter forte  1  2  3  4  5  6  7  8  9  10 Gentil e simpático
+33. Você é mais:
+Firme do que gentil  1  2  3  4  5  6  7  8  9  10 Gentil do que firme
+34. Você é mais tendencioso a manter as coisas:
+Bem organizadas  1  2  3  4  5  6  7  8  9  10 Sem terminar
+35. Você dá mais valor ao que é:
+Definitivo  1  2  3  4  5  6  7  8  9  10 Mutável
+36. Novas interações com outros:
+O estimula e incentiva  1  2  3  4  5  6  7  8  9  10 Consome suas energias
+37. Frequentemente você é:
+Uma pessoa do tipo prática  1  2  3  4  5  6  7  8  9  10 Um tipo de pessoa abstrata
+38. Qual dos itens se identifica mais com você:
+Percepção exata e sem enganos  1  2  3  4  5  6  7  8  9  10 Formação de conceitos
+39. O que é mais realizador:
+Discutir uma questão profundamente  1  2  3  4  5  6  7  8  9  10 Chegar a um acordo acerca de um assunto
+40. O que te conduz mais:
+Sua cabeça  1  2  3  4  5  6  7  8  9  10 Seu coração
+41. Você se sente mais confortável com um trabalho:
+Contratado  1  2  3  4  5  6  7  8  9  10 Feito de forma casual
+42. Você prefere que as coisas sejam:
+Certas e ordenadas  1  2  3  4  5  6  7  8  9  10 Opcionais
+43. Você prefere:
+Muitos amigos com breves contatos  1  2  3  4  5  6  7  8  9  10 Poucos amigos com um contato mais longo
+44. Você é mais atraído a:
+Informações substanciais  1  2  3  4  5  6  7  8  9  10 Suposições confiáveis
+45. Você se interessa mais em:
+Produção  1  2  3  4  5  6  7  8  9  10 Pesquisas
+46. Você se sente mais confortável quando está sendo:
+Objetivo  1  2  3  4  5  6  7  8  9  10 Pessoal
+47. Você se avalia como uma pessoa que é mais:
+Indisposta  1  2  3  4  5  6  7  8  9  10 Dedicada, esforçada.
+48. Você fica mais confortável com uma:
+Opinião final  1  2  3  4  5  6  7  8  9  10 Opinião incerta
+49. Você fica mais confortável:
+Após uma decisão  1  2  3  4  5  6  7  8  9  10 Antes de uma decisão
+50. Você:
+Fala fácil e longamente com desconhecidos  1  2  3  4  5  6  7  8  9  10 Não tem muito que dizer a desconhecidos
+51. Você normalmente é mais interessado em:
+Um fato isolado  1  2  3  4  5  6  7  8  9  10 Um caso geral
+52. Você se sente:
+Mais prático do que engenhoso  1  2  3  4  5  6  7  8  9  10 Mais engenhoso do que prático
+53. Você tipicamente é uma pessoa com:
+Claros propósitos  1  2  3  4  5  6  7  8  9  10 Sentimentos fortes
+54. Você se inclina mais a ser:
+Justo  1  2  3  4  5  6  7  8  9  10 Compreensivo
+55. É mais preferível:
+Certificar-se de que as coisas estão certas  1  2  3  4  5  6  7  8  9  10 Apenas deixar que as coisas aconteçam
+56. É mais do seu jeito:
+Deixar as coisas ajeitadas  1  2  3  4  5  6  7  8  9  10 Acomodar-se
+57. Quando o telefone toca você:
+Corre para atender  1  2  3  4  5  6  7  8  9  10 Espera que alguém atenda
+58. Você acha que tem mais:
+Um bom senso de realidade  1  2  3  4  5  6  7  8  9  10 Uma boa imaginação
+59. Você é mais atraído a:
+Fundamentos  1  2  3  4  5  6  7  8  9  10 Insinuações
+60. Ao julgar você é mais:
+Neutro  1  2  3  4  5  6  7  8  9  10 Cuidadoso
+61. Você considera a si mesmo uma pessoa:
+Capaz de pensar claramente  1  2  3  4  5  6  7  8  9  10 De boa intenção
+62. Você é mais tendencioso a:
+Organizar as atividades  1  2  3  4  5  6  7  8  9  10 Pegar as coisas quando elas vêm
+63. Você é uma pessoa que é mais:
+Sistemática  1  2  3  4  5  6  7  8  9  10 Imprevisível
+64. Você é mais inclinado a ser:
+De fácil acesso  1  2  3  4  5  6  7  8  9  10 De certa forma reservado
+65. Você se diverte mais com:
+Experiências palpáveis  1  2  3  4  5  6  7  8  9  10 Imaginações
+66. Você prefere:
+Algo mais literal  1  2  3  4  5  6  7  8  9  10 Algo mais figurativo
+67. Normalmente você é mais:
+Imparcial  1  2  3  4  5  6  7  8  9  10 Compassivo
+68. Tipicamente você é mais:
+Justo do que bondoso  1  2  3  4  5  6  7  8  9  10 Bondoso do que justo
+69. É mais parecido com você:
+Fazer rápidos juízos  1  2  3  4  5  6  7  8  9  10 Demorar-se em fazer julgamentos
+70. Você tende a ser mais:
+Deliberado do que espontâneo  1  2  3  4  5  6  7  8  9  10 Espontâneo do que deliberado

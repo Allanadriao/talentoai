@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { ShieldAlert, Users, CreditCard, Settings } from 'lucide-react';
 import { logout } from '../login/actions';
+import AdminLinkGenerator from './AdminLinkGenerator';
 
 export default async function AdminDashboard() {
   const supabase = createClient();
@@ -33,7 +34,9 @@ export default async function AdminDashboard() {
           </form>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AdminLinkGenerator userId={user.id} />
+          
           <Link href="/admin/recruiters">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full">
               <Users className="text-indigo-500 mb-4" size={32} />

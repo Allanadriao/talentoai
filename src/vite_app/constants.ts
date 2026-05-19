@@ -24,6 +24,7 @@ export const ASSESSMENT_CARDS = [
   { id: 'personality', title: 'Personality MX', desc: 'Mapeia o perfil comportamental', time: '25-30 min', questions: 70, color: 'bg-purple-500', icon: Brain },
   { id: 'vision', title: 'Vision MX', desc: 'Identifica a visão de mundo do candidato', time: '15-20 min', questions: 25, color: 'bg-emerald-500', icon: Eye },
   { id: 'player', title: 'Player MX', desc: 'Analisa comportamento em 3 níveis', time: '20-25 min', questions: 40, color: 'bg-sky-500', icon: Target },
+  { id: 'power', title: 'Power MX', desc: 'Avaliação profunda de personalidade central', time: '40-50 min', questions: 180, color: 'bg-indigo-600', icon: Zap },
 ];
 
 export const ENERGY_MX_QUESTIONS: Question[] = energyMxQuestions.map(q => ({

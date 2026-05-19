@@ -11,31 +11,40 @@ function PowerMxContent() {
   const searchParams = useSearchParams();
   const candidateId = searchParams.get("candidate_id") || "";
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentParte, setCurrentParte] = useState<ParteType>(1);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const totalQuestions = powerMxQuestions.length;
-  const currentQuestion = powerMxQuestions[currentStep];
+  const currentQuestions = powerMxQuestions.filter(q => q.parte === currentParte);
+  const totalPartes = 9;
 
-  const handleAnswer = (value: number) => {
-    const newAnswers = { ...answers, [currentQuestion.id]: value };
-    setAnswers(newAnswers);
+  const handleAnswer = (questionId: number, value: number) => {
+    setAnswers(prev => ({ ...prev, [questionId]: value }));
+    setErrorMsg("");
+  };
 
-    setTimeout(async () => {
-      if (currentStep < totalQuestions - 1) {
-        setCurrentStep((prev) => prev + 1);
-      } else {
-        setShowResults(true);
-        if (candidateId) {
-          setIsSaving(true);
-          const finalResults = calculateResults(newAnswers);
-          await saveAssessmentResult(candidateId, "power_mx", finalResults, newAnswers);
-          setIsSaving(false);
-        }
+  const handleNext = async () => {
+    // Verificamos se todas as questões da parte atual foram respondidas
+    const answeredCount = currentQuestions.filter(q => answers[q.id] !== undefined).length;
+    if (answeredCount < currentQuestions.length) {
+      setErrorMsg("Por favor, responda todas as perguntas desta parte antes de continuar.");
+      return;
+    }
+
+    if (currentParte < totalPartes) {
+      setCurrentParte((prev) => (prev + 1) as ParteType);
+      window.scrollTo(0, 0);
+    } else {
+      setShowResults(true);
+      if (candidateId) {
+        setIsSaving(true);
+        const finalResults = calculateResults(answers);
+        await saveAssessmentResult(candidateId, "power_mx", finalResults, answers);
+        setIsSaving(false);
       }
-    }, 400);
+    }
   };
 
   const calculateResults = (currentAnswers = answers) => {
@@ -93,7 +102,7 @@ function PowerMxContent() {
                   className="h-full bg-indigo-500"
                   initial={{ width: 0 }}
                   animate={{
-                    width: `${((currentStep) / totalQuestions) * 100}%`,
+                    width: `${((currentParte - 1) / totalPartes) * 100}%`,
                   }}
                   transition={{ duration: 0.3 }}
                 />
@@ -101,37 +110,54 @@ function PowerMxContent() {
 
               <div className="mb-8 text-center mt-4">
                 <p className="text-indigo-600 font-semibold tracking-wide text-sm uppercase mb-3">
-                  Power MX • Pergunta {currentStep + 1} de {totalQuestions}
+                  Power MX • Questionário {currentParte} de {totalPartes}
                 </p>
-                <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-slate-800">
-                  {currentQuestion.text}
+                <h2 className="text-xl sm:text-2xl font-bold leading-tight text-slate-800">
+                  Avalie as afirmações abaixo
                 </h2>
-                <p className="text-slate-500 mt-4 text-sm font-medium">
+                <p className="text-slate-500 mt-2 text-sm font-medium">
                   De 0 (nada a ver comigo) a 10 (totalmente eu)
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 w-full mt-10">
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-                  <button
-                    key={value}
-                    onClick={() => handleAnswer(value)}
-                    className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl text-lg font-bold flex items-center justify-center transition-all duration-200 overflow-hidden group border-2
-                      ${
-                        answers[currentQuestion.id] === value
-                          ? "bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200 scale-110 z-10"
-                          : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200 hover:border-indigo-300"
-                      }`}
-                  >
-                    <span className="relative z-10">{value}</span>
-                  </button>
+              <div className="space-y-8 mt-10">
+                {currentQuestions.map((q, index) => (
+                  <div key={q.id} className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                    <p className="text-lg font-bold text-slate-800 mb-6">
+                      <span className="text-indigo-500 mr-2">{index + 1}.</span> {q.text}
+                    </p>
+                    <div className="flex flex-wrap justify-between gap-1 sm:gap-2">
+                      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
+                        <button
+                          key={value}
+                          onClick={() => handleAnswer(q.id, value)}
+                          className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl text-sm font-bold flex items-center justify-center transition-all duration-200 overflow-hidden border-2
+                            ${
+                              answers[q.id] === value
+                                ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200 scale-110 z-10"
+                                : "bg-white hover:bg-slate-100 text-slate-600 border-slate-200 hover:border-indigo-300"
+                            }`}
+                        >
+                          <span className="relative z-10">{value}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
 
-              <div className="flex justify-between items-center mt-8 text-sm font-semibold text-slate-400 px-2 sm:px-6">
-                <span>0 - Nada a ver</span>
-                <span>10 - Totalmente eu</span>
-              </div>
+              {errorMsg && (
+                <div className="mt-6 p-4 bg-rose-50 text-rose-600 rounded-xl text-sm font-medium border border-rose-100 text-center">
+                  {errorMsg}
+                </div>
+              )}
+
+              <button
+                onClick={handleNext}
+                className="mt-10 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2"
+              >
+                {currentParte < totalPartes ? "Próximo Questionário" : "Finalizar Teste"} <ArrowRight size={18} />
+              </button>
             </motion.div>
           ) : (
             <motion.div
@@ -178,7 +204,7 @@ function PowerMxContent() {
 
               <button
                 onClick={() => {
-                  setCurrentStep(0);
+                  setCurrentParte(1);
                   setAnswers({});
                   setShowResults(false);
                 }}
