@@ -49,7 +49,7 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
     // Check if the candidate exists
     const { data: candidate, error: candidateError } = await supabase
       .from("candidates")
-      .select("id")
+      .select("id, progress, status")
       .eq("id", candidateId)
       .single();
 
@@ -64,9 +64,15 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
       .eq("candidate_id", candidateId)
       .single();
 
+    let isNewTestForCandidate = false;
+
     if (existingResult) {
       // Update existing record
-      const updatedRawAnswers = { ...(existingResult.raw_answers || {}), [testType]: rawAnswersPayload };
+      const raw = existingResult.raw_answers || {};
+      if (!raw[testType]) {
+        isNewTestForCandidate = true;
+      }
+      const updatedRawAnswers = { ...raw, [testType]: rawAnswersPayload };
       
       const { error: updateError } = await supabase
         .from("assessment_results")
@@ -78,6 +84,7 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
 
       if (updateError) throw updateError;
     } else {
+      isNewTestForCandidate = true;
       // Insert new record
       const { error: insertError } = await supabase
         .from("assessment_results")
@@ -88,6 +95,20 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
         });
 
       if (insertError) throw insertError;
+    }
+
+    // Atualiza o progresso na tabela de candidatos
+    if (isNewTestForCandidate) {
+      const newProgress = (candidate.progress || 0) + 1;
+      const newStatus = newProgress >= 4 ? 'Completo' : 'Em Progresso';
+      
+      await supabase
+        .from("candidates")
+        .update({
+          progress: newProgress,
+          status: newStatus
+        })
+        .eq("id", candidateId);
     }
 
     return { success: true };
