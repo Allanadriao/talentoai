@@ -15,17 +15,22 @@ function PersonalityMxContent() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const totalQuestions = personalityMxQuestions.length;
   const currentQuestion = personalityMxQuestions[currentStep];
 
   const handleAnswer = (trait: string) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
     const newAnswers = { ...answers, [currentQuestion.id]: trait };
     setAnswers(newAnswers);
 
     setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
+        setIsTransitioning(false);
       } else {
         setShowResults(true);
         if (candidateId) {
@@ -34,6 +39,7 @@ function PersonalityMxContent() {
           await saveAssessmentResult(candidateId, "personality_mx", finalResults, newAnswers);
           setIsSaving(false);
         }
+        setIsTransitioning(false);
       }
     }, 400);
   };

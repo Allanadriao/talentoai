@@ -15,17 +15,22 @@ function VisionMxContent() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const totalQuestions = visionMxQuestions.length;
   const currentQuestion = visionMxQuestions[currentStep];
 
   const handleAnswer = (optionId: string) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
     const newAnswers = { ...answers, [currentQuestion.id]: optionId };
     setAnswers(newAnswers);
 
     setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
+        setIsTransitioning(false);
       } else {
         setShowResults(true);
         if (candidateId) {
@@ -34,6 +39,7 @@ function VisionMxContent() {
           await saveAssessmentResult(candidateId, "vision_mx", finalResults, newAnswers);
           setIsSaving(false);
         }
+        setIsTransitioning(false);
       }
     }, 400);
   };

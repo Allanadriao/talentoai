@@ -15,17 +15,22 @@ function EnergyMxContent() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const totalQuestions = energyMxQuestions.length;
   const currentQuestion = energyMxQuestions[currentStep];
 
   const handleAnswer = (value: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
     const newAnswers = { ...answers, [currentQuestion.id]: value };
     setAnswers(newAnswers);
     
     setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
+        setIsTransitioning(false);
       } else {
         setShowResults(true);
         if (candidateId) {
@@ -34,6 +39,7 @@ function EnergyMxContent() {
           await saveAssessmentResult(candidateId, "energy_mx", finalResults, newAnswers);
           setIsSaving(false);
         }
+        setIsTransitioning(false);
       }
     }, 400); // Small delay to show the selected state
   };
