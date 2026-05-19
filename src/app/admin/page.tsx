@@ -17,7 +17,7 @@ export default async function AdminDashboard() {
   return (
     <div className="min-h-screen bg-slate-50 p-8 font-sans">
       <div className="max-w-6xl mx-auto">
-        <header className="flex justify-between items-center mb-12 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
               <ShieldAlert size={24} />

@@ -126,12 +126,12 @@ function PowerMxContent() {
                     <p className="text-lg font-bold text-slate-800 mb-6">
                       <span className="text-indigo-500 mr-2">{index + 1}.</span> {q.text}
                     </p>
-                    <div className="flex flex-wrap justify-between gap-1 sm:gap-2">
+                    <div className="flex flex-wrap justify-center sm:justify-between gap-1.5 sm:gap-2">
                       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                         <button
                           key={value}
                           onClick={() => handleAnswer(q.id, value)}
-                          className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl text-sm font-bold flex items-center justify-center transition-all duration-200 overflow-hidden border-2
+                          className={`relative w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center transition-all duration-200 overflow-hidden border-2
                             ${
                               answers[q.id] === value
                                 ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200 scale-110 z-10"
