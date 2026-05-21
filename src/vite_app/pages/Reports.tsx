@@ -26,6 +26,29 @@ const PROFILE_DESCRIPTIONS = {
   } as Record<string, string>
 };
 
+const generateAISynthesis = (candidateName: string, data: any) => {
+  if (!data) return null;
+  const name = candidateName.split(' ')[0];
+  const { vision, energy, player, personality } = data;
+  
+  const mbti1 = personality.pctAber >= personality.pctFech ? "extrovertida e aberta a novas interações" : "introvertida e focada no mundo interno";
+  const mbti2 = personality.pctInov >= personality.pctTrad ? "inovadora e voltada para o futuro" : "tradicional e focada na realidade prática";
+  const mbti3 = personality.pctPens >= personality.pctSent ? "lógica, baseada em dados racionais" : "empática, guiada por valores e sentimentos";
+  const mbti4 = personality.pctDeci >= personality.pctFlex ? "decisiva, organizada e planejada" : "flexível, espontânea e adaptável";
+
+  return (
+    <>
+      Com base na análise multidimensional, a Inteligência Artificial TalentoIA mapeou que <strong className="text-white font-bold">{name}</strong> apresenta um perfil cognitivo com forte ancoragem em <strong className="text-white font-bold">{energy.dominantEnergy}</strong> (Energy MX), demonstrando uma abordagem natural predominante para lidar com desafios diários. 
+      <br /><br />
+      Sua visão estratégica e forma de processar o mundo alinham-se ao arquétipo <strong className="text-white font-bold">{vision.dominantVision}</strong> (Vision MX), o que sugere uma forma singular de absorver informações e projetar cenários sob essa lente. No ambiente corporativo, atua predominantemente de forma <strong className="text-white font-bold">{player.dominantPlayer}</strong> (Player MX), característica que molda a maneira como colabora e entrega resultados sob pressão. 
+      <br /><br />
+      Na estrutura de personalidade (Personality MX), destaca-se uma natureza {mbti1}, aliada a uma preferência {mbti2}. Toma decisões de forma predominantemente {mbti3} e estrutura sua rotina de maneira {mbti4}. 
+      <br /><br />
+      <strong className="text-indigo-300 font-bold">Conclusão da IA:</strong> Esse conjunto forma um padrão comportamental altamente específico, capaz de agregar extremo valor em contextos que demandem a combinação destas virtudes comportamentais.
+    </>
+  );
+};
+
 interface ReportsProps {
   selectedCandidate: Candidate | null;
   setSelectedCandidate: (c: Candidate | null) => void;
@@ -217,6 +240,34 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
         ) : data ? (
           <div className="space-y-12">
             
+            {/* AI SYNTHESIS CARD */}
+            <div className="bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-900 p-8 lg:p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full group-hover:bg-indigo-500/20 transition-colors duration-700"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 blur-3xl rounded-full group-hover:bg-purple-500/20 transition-colors duration-700"></div>
+              
+              <div className="relative z-10 flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3.5 bg-white/10 backdrop-blur-md text-indigo-300 rounded-2xl border border-white/10 shadow-inner">
+                    <Sparkles size={24} className="animate-pulse" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-2xl text-white tracking-tight flex items-center gap-3">
+                      Síntese Comportamental IA
+                    </h4>
+                    <p className="text-indigo-200/80 text-sm font-medium mt-1">
+                      Resumo executivo gerado automaticamente por Inteligência Artificial
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl">
+                  <p className="text-white/90 leading-relaxed font-medium text-sm md:text-base whitespace-pre-line">
+                    {generateAISynthesis(selectedCandidate.name, data)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* ROW 1: ENERGY MX & VISION MX */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
