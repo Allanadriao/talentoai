@@ -376,6 +376,11 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
             </div>
 
           </div>
+        ) : (
+          <div className="py-24 text-center text-slate-400 bg-white/50 rounded-3xl border border-slate-100/50">
+            <FileText size={48} className="mx-auto mb-4 opacity-20" />
+            <p className="font-medium">Este candidato ainda não possui resultados de assessment registrados.</p>
+          </div>
         )}
       </div>
     </motion.div>
