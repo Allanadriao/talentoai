@@ -12,18 +12,30 @@ export async function createPublicCandidate(recruiterId: string, name: string, e
   }
 
   try {
+    // Verifica se o candidato já existe (evita erro de constraint de email unico se houver)
+    const { data: existing } = await supabase
+      .from('candidates')
+      .select('id')
+      .eq('email', email)
+      .eq('user_id', recruiterId)
+      .maybeSingle();
+
+    if (existing) {
+      return { success: true, candidateId: existing.id };
+    }
+
     const { data, error } = await supabase
       .from('candidates')
       .insert({
-        user_id: recruiterId, // Assumes candidates table uses user_id for the recruiter owner
+        user_id: recruiterId,
         name,
         email,
         role: role || 'Não informado',
         department: department || 'Não informado',
         status: 'Pendente',
         progress: 0,
-        // using the older fields if needed, like position: role
-        position: role || 'Não informado'
+        position: role || 'Não informado',
+        resume: 'Não enviado' // Garante que a coluna não fique nula caso haja constraint
       })
       .select('id')
       .single();
@@ -58,11 +70,14 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
     }
 
     // Check if there is already an assessment_results row for this candidate
-    const { data: existingResult } = await supabase
+    const { data: existingResults } = await supabase
       .from("assessment_results")
       .select("id, raw_answers")
       .eq("candidate_id", candidateId)
-      .single();
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    const existingResult = existingResults && existingResults.length > 0 ? existingResults[0] : null;
 
     let isNewTestForCandidate = false;
 
@@ -97,19 +112,82 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
       if (insertError) throw insertError;
     }
 
-    // Atualiza o progresso na tabela de candidatos
-    if (isNewTestForCandidate) {
-      const newProgress = (candidate.progress || 0) + 1;
-      const newStatus = newProgress >= 4 ? 'Completo' : 'Em Progresso';
-      
-      await supabase
-        .from("candidates")
-        .update({
-          progress: newProgress,
-          status: newStatus
-        })
-        .eq("id", candidateId);
+    // Atualiza o progresso e calcula match_score se concluído
+    const newProgress = isNewTestForCandidate ? (candidate.progress || 0) + 1 : candidate.progress || 0;
+    const newStatus = newProgress >= 4 ? 'Completo' : 'Em Progresso';
+    
+    let matchScore = null;
+    
+    // Se estiver completo, buscamos todos os resultados para calcular o match_score
+    if (newStatus === 'Completo') {
+      const { data: fullResultsArr } = await supabase
+        .from('assessment_results')
+        .select('*')
+        .eq('candidate_id', candidateId)
+        .order('created_at', { ascending: false })
+        .limit(1);
+        
+      const fullResults = fullResultsArr && fullResultsArr.length > 0 ? fullResultsArr[0] : null;
+        
+      if (fullResults) {
+        let totalDiff = 0;
+        let totalPossibleDiff = 0;
+        
+        // Default Ideal Profile
+        const ideal = {
+          energy: { razao: 39, acao: 34, emocao: 37, total: 110 },
+          vision: { alien: 16, robo: 48, mamifero: 12, tubarao: 24 },
+          personality: { aberto: 4, fechado: 6, tradicional: 13, inovador: 7, pensador: 9, sentimento: 11, decisivo: 12, flexivel: 8 }
+        };
+        
+        // Energy Match
+        if (fullResults.energy_mx) {
+          ['razao', 'acao', 'emocao'].forEach(key => {
+            const idl = (ideal.energy as any)[key];
+            const act = fullResults.energy_mx[key] || 0;
+            totalDiff += Math.abs(idl - act);
+            totalPossibleDiff += Math.max(idl, 50);
+          });
+        }
+        
+        // Vision Match
+        if (fullResults.vision_mx) {
+          ['alien', 'robo', 'mamifero', 'tubarao'].forEach(key => {
+            const idl = (ideal.vision as any)[key];
+            const act = fullResults.vision_mx[key] || 0;
+            totalDiff += Math.abs(idl - act);
+            totalPossibleDiff += 25;
+          });
+        }
+        
+        // Personality Match
+        if (fullResults.personality_mx) {
+          ['aberto', 'fechado', 'tradicional', 'inovador', 'pensador', 'sentimento', 'decisivo', 'flexivel'].forEach(key => {
+            const idl = (ideal.personality as any)[key];
+            const act = fullResults.personality_mx[key] || 0;
+            totalDiff += Math.abs(idl - act);
+            totalPossibleDiff += 70;
+          });
+        }
+        
+        if (totalPossibleDiff > 0) {
+          matchScore = Math.max(0, Math.min(100, Math.floor(100 - (totalDiff / totalPossibleDiff * 100))));
+          
+          await supabase.from("assessment_results")
+            .update({ match_score: matchScore })
+            .eq("candidate_id", candidateId);
+        }
+      }
     }
+    
+    await supabase
+      .from("candidates")
+      .update({
+        progress: newProgress,
+        status: newStatus,
+        ...(matchScore !== null ? { match_score: matchScore } : {})
+      })
+      .eq("id", candidateId);
 
     return { success: true };
   } catch (err: any) {

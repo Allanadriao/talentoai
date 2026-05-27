@@ -47,22 +47,50 @@ const tests = [
   }
 ];
 
-export default function TestDashboard({
+import { createAdminClient } from "@/lib/supabase/server";
+
+export default async function TestDashboard({
   searchParams,
 }: {
   searchParams: { candidate_id?: string, t?: string }
 }) {
   const candidateId = searchParams.candidate_id || "";
-
   const allowedTests = searchParams.t ? searchParams.t.split(',') : null;
+  
+  let completedTests: string[] = [];
+  
+  if (candidateId) {
+    const supabase = createAdminClient();
+    const { data: results } = await supabase
+      .from('assessment_results')
+      .select('energy_mx, vision_mx, personality_mx, player_mx, power_mx')
+      .eq('candidate_id', candidateId)
+      .order('created_at', { ascending: false })
+      .limit(1);
+      
+    if (results && results.length > 0) {
+      const res = results[0];
+      if (res.energy_mx) completedTests.push('energy-mx');
+      if (res.vision_mx) completedTests.push('vision-mx');
+      if (res.personality_mx) {
+        completedTests.push('personality-mx');
+        completedTests.push('personality-mx-2');
+      }
+      if (res.player_mx) completedTests.push('player-mx');
+      if (res.power_mx) completedTests.push('power-mx');
+    }
+  }
+
   const visibleTests = tests.filter(test => {
     if (!allowedTests) return true;
-    
-    // extrair o id do teste a partir do href (ex: '/test/energy-mx' -> 'energy-mx')
     const testId = test.href.split('/').pop();
-    // mapeamento flexível para garantir compatibilidade ('energy_mx' ou 'energy-mx')
     const normalizedAllowed = allowedTests.map(t => t.replace('_', '-'));
     return testId && normalizedAllowed.includes(testId);
+  });
+  
+  const allCompleted = visibleTests.length > 0 && visibleTests.every(test => {
+    const testId = test.href.split('/').pop() || '';
+    return completedTests.includes(testId);
   });
 
   return (
@@ -78,26 +106,43 @@ export default function TestDashboard({
              </div>
              <div>
                <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Portal do Candidato</h1>
-               <p className="text-slate-500 font-medium mt-1">Selecione um dos testes abaixo para iniciar sua avaliação</p>
+               <p className="text-slate-500 font-medium mt-1">
+                 {allCompleted 
+                   ? "Parabéns, você concluiu todos os testes disponíveis!"
+                   : "Selecione um dos testes abaixo para iniciar sua avaliação."}
+               </p>
              </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleTests.map((test, index) => (
-            <Link key={index} href={test.href !== '#' && candidateId ? `${test.href}?candidate_id=${candidateId}` : test.href}>
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 h-full hover:shadow-xl hover:shadow-slate-200/50 hover:border-indigo-300 transition-all group flex flex-col cursor-pointer">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white mb-6 shadow-md ${test.color} group-hover:scale-110 transition-transform`}>
+          {visibleTests.map((test, index) => {
+            const testId = test.href.split('/').pop() || '';
+            const isCompleted = completedTests.includes(testId);
+            
+            const cardContent = (
+              <div className={`border rounded-2xl p-6 h-full transition-all flex flex-col ${isCompleted ? 'bg-emerald-50/50 border-emerald-100 opacity-80 cursor-default' : 'bg-white border-slate-200 hover:shadow-xl hover:shadow-slate-200/50 hover:border-indigo-300 group cursor-pointer'}`}>
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white mb-6 shadow-md ${isCompleted ? 'bg-emerald-500' : test.color} ${!isCompleted && 'group-hover:scale-110 transition-transform'}`}>
                   {test.icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-2">{test.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed flex-grow">{test.description}</p>
-                <div className="mt-6 flex items-center text-indigo-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
-                  Acessar Teste &rarr;
+                <h3 className={`text-xl font-bold mb-2 ${isCompleted ? 'text-emerald-900' : 'text-slate-800'}`}>{test.title}</h3>
+                <p className={`text-sm leading-relaxed flex-grow ${isCompleted ? 'text-emerald-700/70' : 'text-slate-500'}`}>{test.description}</p>
+                <div className={`mt-6 font-semibold text-sm flex items-center ${isCompleted ? 'text-emerald-600' : 'text-indigo-600 group-hover:translate-x-1 transition-transform'}`}>
+                  {isCompleted ? '✔ Concluído' : 'Acessar Teste \u2192'}
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+            
+            if (isCompleted) {
+              return <div key={index}>{cardContent}</div>;
+            }
+            
+            return (
+              <Link key={index} href={test.href !== '#' && candidateId ? `${test.href}?candidate_id=${candidateId}` : test.href}>
+                {cardContent}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

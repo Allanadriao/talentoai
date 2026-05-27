@@ -41,12 +41,15 @@ export default function Candidates({
   const [selectedTests, setSelectedTests] = useState<string[]>(AVAILABLE_TESTS.map(t => t.id));
   const [copied, setCopied] = useState(false);
 
-  const filteredCandidates = candidates.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.department.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredCandidates = candidates.filter(c => {
+    const q = searchQuery.toLowerCase();
+    return (
+      (c.name || '').toLowerCase().includes(q) ||
+      (c.email || '').toLowerCase().includes(q) ||
+      (c.role || '').toLowerCase().includes(q) ||
+      (c.department || '').toLowerCase().includes(q)
+    );
+  });
 
   const handleCopyLink = async () => {
     if (!candidateToShare) return;
@@ -174,11 +177,11 @@ export default function Candidates({
                 <td className="px-8 py-5">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-xs">
-                      {c.name.split(' ').map(n => n[0]).join('')}
+                      {(c.name || 'U').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase()}
                     </div>
                     <div>
-                      <p className="text-sm font-bold">{c.name}</p>
-                      <p className="text-[10px] text-slate-400">{c.email}</p>
+                      <p className="text-sm font-bold">{c.name || 'Sem nome'}</p>
+                      <p className="text-[10px] text-slate-400">{c.email || ''}</p>
                     </div>
                   </div>
                 </td>

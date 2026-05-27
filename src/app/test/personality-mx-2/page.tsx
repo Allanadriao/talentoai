@@ -2,24 +2,47 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { personalityMx2Questions } from "@/data/personalityMx2";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
+import { saveAssessmentResult } from "../actions";
 
 export default function PersonalityMx2Test() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const candidateId = searchParams.get("candidate_id") || "";
+
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const totalQuestions = personalityMx2Questions.length;
   const currentQuestion = personalityMx2Questions[currentStep];
 
+  React.useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (currentStep > 0 && !showResults) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [currentStep, showResults]);
+
   const handleAnswer = (value: number) => {
     setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
       } else {
         setShowResults(true);
+        if (candidateId) {
+          setIsSaving(true);
+          // Assuming we just save answers, since there is no calculateResults for personality-mx-2
+          await saveAssessmentResult(candidateId, "personality_mx", { fromScale: true }, answers);
+          setIsSaving(false);
+        }
       }
     }, 400);
   };
@@ -110,13 +133,15 @@ export default function PersonalityMx2Test() {
 
               <button
                 onClick={() => {
-                  setCurrentStep(0);
-                  setAnswers({});
-                  setShowResults(false);
+                  if (candidateId) {
+                    router.push(`/test?candidate_id=${candidateId}`);
+                  } else {
+                    router.push('/test');
+                  }
                 }}
-                className="w-full py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 rounded-xl font-bold transition-all flex items-center justify-center gap-2 hover:border-slate-300"
+                className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200"
               >
-                Refazer o Teste <ArrowRight size={18} />
+                Voltar para o Portal <ArrowRight size={18} />
               </button>
             </motion.div>
           )}

@@ -66,9 +66,10 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
         .from('assessment_results')
         .select('*')
         .eq('candidate_id', selectedCandidate.id)
-        .single()
+        .order('created_at', { ascending: false })
+        .limit(1)
         .then(({ data, error }) => {
-          if (!error && data) setResults(data);
+          if (!error && data && data.length > 0) setResults(data[0]);
           else setResults(null);
           setLoading(false);
         });
@@ -82,10 +83,10 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
 
     // Vision MX
     const vision = results.vision_mx || {};
-    const vAlien = Math.round(((vision.alien || 0) / 25) * 100);
-    const vRobo = Math.round(((vision.robo || 0) / 25) * 100);
-    const vMamifero = Math.round(((vision.mamifero || 0) / 25) * 100);
-    const vTubarao = Math.round(((vision.tubarao || 0) / 25) * 100);
+    const vAlien = Math.round(((vision.Alien || vision.alien || 0) / 25) * 100);
+    const vRobo = Math.round(((vision.Robô || vision.robo || 0) / 25) * 100);
+    const vMamifero = Math.round(((vision.Mamífero || vision.mamifero || 0) / 25) * 100);
+    const vTubarao = Math.round(((vision.Tubarão || vision.tubarao || 0) / 25) * 100);
     
     const vMax = Math.max(vAlien, vRobo, vMamifero, vTubarao);
     let dominantVision = "Tubarão";
@@ -96,10 +97,10 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
 
     // Energy MX
     const energy = results.energy_mx || {};
-    const eRazao = energy.razao || 0;
-    const eAcao = energy.acao || 0;
-    const eEmocao = energy.emocao || 0;
-    const eTotal = energy.total || (eRazao + eAcao + eEmocao);
+    const eRazao = energy.Razão || energy.razao || 0;
+    const eAcao = energy.Ação || energy.acao || 0;
+    const eEmocao = energy.Emoção || energy.emocao || 0;
+    const eTotal = energy.Energia || energy.total || (eRazao + eAcao + eEmocao);
     const eMax = 135; 
     
     const eMaxScore = Math.max(eRazao, eAcao, eEmocao);
@@ -121,40 +122,44 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
       "Tipo 8": { label: "O Desafiador", desc: "Líder, decidido, protetor" },
       "Tipo 9": { label: "O Pacificador", desc: "Mediador, tolerante, empático" }
     };
-    const powerEntries = Object.entries(power).map(([key, val]) => ({
-      type: key, value: Number(val), label: powerMap[key]?.label || key, desc: powerMap[key]?.desc || ""
-    }));
+    const powerEntries = Object.entries(power).map(([key, val]) => {
+      const typeKey = key.startsWith("Tipo") ? key : `Tipo ${key}`;
+      return {
+        type: typeKey, value: Number(val), label: powerMap[typeKey]?.label || typeKey, desc: powerMap[typeKey]?.desc || ""
+      };
+    });
     powerEntries.sort((a, b) => b.value - a.value);
     const topPower = powerEntries.slice(0, 3);
     const powerColors = ["bg-rose-500", "bg-indigo-500", "bg-sky-500"];
 
     // Personality MX
     const personality = results.personality_mx || {};
-    const pAber = personality.aberto || 0; const pFech = personality.fechado || 0;
+    const pAber = personality.Aberto || personality.aberto || 0; const pFech = personality.Fechado || personality.fechado || 0;
     const tAberFech = (pAber + pFech) || 11;
-    const pTrad = personality.tradicional || 0; const pInov = personality.inovador || 0;
+    const pTrad = personality.Tradicional || personality.tradicional || 0; const pInov = personality.Inovador || personality.inovador || 0;
     const tTradInov = (pTrad + pInov) || 21;
-    const pPens = personality.pensador || 0; const pSent = personality.sentimento || 0;
+    const pPens = personality.Pensador || personality.pensador || 0; const pSent = personality.Sentimento || personality.sentimento || 0;
     const tPensSent = (pPens + pSent) || 18;
-    const pDeci = personality.decisivo || 0; const pFlex = personality.flexivel || 0;
+    const pDeci = personality.Decisivo || personality.decisivo || 0; const pFlex = personality.Flexível || personality.flexivel || 0;
     const tDeciFlex = (pDeci + pFlex) || 20;
 
     // Player MX
-    const player = results.player_mx || { aparente: {}, atual: {}, pressao: {} };
-    const getPlayerPct = (ctx: string, profile: string, total: number) => Math.round(((player[ctx]?.[profile] || 0) / total) * 100);
-    const getContextTotal = (ctx: string) => (player[ctx]?.expressivo || 0) + (player[ctx]?.pragmatico || 0) + (player[ctx]?.afavel || 0) + (player[ctx]?.analitico || 0) || 1;
+    const player = results.player_mx || {};
     
-    const totalAparente = getContextTotal('aparente');
-    const totalAtual = getContextTotal('atual');
-    const totalPressao = getContextTotal('pressao');
+    const getRawPct = (prof: string, ctx: string) => {
+      const valStr = player[prof]?.[ctx] || player.atual?.[prof.toLowerCase()] || '0%';
+      if (typeof valStr === 'number') return valStr;
+      return parseInt(valStr.replace('%', '')) || 0;
+    };
 
     // Identificar Player MX dominante no contexto "Atual"
     const pAtual = {
-      Expressivo: getPlayerPct('atual', 'expressivo', totalAtual),
-      Pragmático: getPlayerPct('atual', 'pragmatico', totalAtual),
-      Afável: getPlayerPct('atual', 'afavel', totalAtual),
-      Analítico: getPlayerPct('atual', 'analitico', totalAtual)
+      Expressivo: getRawPct('Expressivo', 'atual'),
+      Pragmático: getRawPct('Pragmático', 'atual'),
+      Afável: getRawPct('Afável', 'atual'),
+      Analítico: getRawPct('Analítico', 'atual')
     };
+    
     const maxPlayerPct = Math.max(pAtual.Expressivo, pAtual.Pragmático, pAtual.Afável, pAtual.Analítico);
     let dominantPlayer = "Pragmático";
     let dominantPlayerColor = "from-orange-400 to-orange-600";
@@ -174,9 +179,9 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
       },
       player: {
         dominantPlayer, dominantPlayerColor,
-        aparente: { expressivo: getPlayerPct('aparente', 'expressivo', totalAparente), pragmatico: getPlayerPct('aparente', 'pragmatico', totalAparente), afavel: getPlayerPct('aparente', 'afavel', totalAparente), analitico: getPlayerPct('aparente', 'analitico', totalAparente) },
+        aparente: { expressivo: getRawPct('Expressivo', 'aparente'), pragmatico: getRawPct('Pragmático', 'aparente'), afavel: getRawPct('Afável', 'aparente'), analitico: getRawPct('Analítico', 'aparente') },
         atual: pAtual,
-        pressao: { expressivo: getPlayerPct('pressao', 'expressivo', totalPressao), pragmatico: getPlayerPct('pressao', 'pragmatico', totalPressao), afavel: getPlayerPct('pressao', 'afavel', totalPressao), analitico: getPlayerPct('pressao', 'analitico', totalPressao) }
+        pressao: { expressivo: getRawPct('Expressivo', 'pressão'), pragmatico: getRawPct('Pragmático', 'pressão'), afavel: getRawPct('Afável', 'pressão'), analitico: getRawPct('Analítico', 'pressão') }
       }
     };
   };

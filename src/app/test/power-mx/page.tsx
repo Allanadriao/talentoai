@@ -2,12 +2,13 @@
 
 import React, { useState, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { powerMxQuestions, powerMxProfiles, ParteType } from "@/data/powerMx";
 import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
 import { saveAssessmentResult } from "../actions";
 
 function PowerMxContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const candidateId = searchParams.get("candidate_id") || "";
 
@@ -19,6 +20,17 @@ function PowerMxContent() {
 
   const currentQuestions = powerMxQuestions.filter(q => q.parte === currentParte);
   const totalPartes = 9;
+
+  React.useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (Object.keys(answers).length > 0 && !showResults) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [answers, showResults]);
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }));
@@ -204,13 +216,15 @@ function PowerMxContent() {
 
               <button
                 onClick={() => {
-                  setCurrentParte(1);
-                  setAnswers({});
-                  setShowResults(false);
+                  if (candidateId) {
+                    router.push(`/test?candidate_id=${candidateId}`);
+                  } else {
+                    router.push('/test');
+                  }
                 }}
-                className="mt-10 w-full py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 rounded-xl font-bold transition-all flex items-center justify-center gap-2 hover:border-slate-300"
+                className="mt-10 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200"
               >
-                Refazer o Teste <ArrowRight size={18} />
+                Voltar para o Portal <ArrowRight size={18} />
               </button>
             </motion.div>
           )}
