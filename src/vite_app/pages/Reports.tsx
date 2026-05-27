@@ -81,12 +81,40 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
   const calculatePercentages = () => {
     if (!results) return null;
 
+    const parsePct = (val: any) => {
+      if (!val) return 0;
+      if (typeof val === 'string') return parseInt(val.replace('%', '')) || 0;
+      if (typeof val === 'number') {
+        // If it's a raw number for vision, it might be out of 25. Let's assume if it's <= 25 it's raw.
+        // But wait, what if it's a percentage that is 20? 
+        // It's safer to always return the number and let the caller divide if needed.
+        return val;
+      }
+      return 0;
+    };
+
+    const parseRaw = (val: any) => {
+      if (!val) return 0;
+      if (typeof val === 'string') return parseInt(val.replace('%', '')) || 0;
+      if (typeof val === 'number') return val;
+      return 0;
+    };
+
     // Vision MX
     const vision = results.vision_mx || {};
-    const vAlien = Math.round(((vision.Alien || vision.alien || 0) / 25) * 100);
-    const vRobo = Math.round(((vision.Robô || vision.robo || 0) / 25) * 100);
-    const vMamifero = Math.round(((vision.Mamífero || vision.mamifero || 0) / 25) * 100);
-    const vTubarao = Math.round(((vision.Tubarão || vision.tubarao || 0) / 25) * 100);
+    
+    let vAlien = parsePct(vision.Alien ?? vision.alien);
+    let vRobo = parsePct(vision.Robô ?? vision.robo);
+    let vMamifero = parsePct(vision.Mamífero ?? vision.mamifero);
+    let vTubarao = parsePct(vision.Tubarão ?? vision.tubarao);
+
+    // Se vieram como números crus (ex: 10), converte para porcentagem
+    if (vAlien <= 25 && vRobo <= 25 && vMamifero <= 25 && vTubarao <= 25 && (vAlien + vRobo + vMamifero + vTubarao) <= 25 && (vAlien + vRobo + vMamifero + vTubarao) > 0) {
+      vAlien = Math.round((vAlien / 25) * 100);
+      vRobo = Math.round((vRobo / 25) * 100);
+      vMamifero = Math.round((vMamifero / 25) * 100);
+      vTubarao = Math.round((vTubarao / 25) * 100);
+    }
     
     const vMax = Math.max(vAlien, vRobo, vMamifero, vTubarao);
     let dominantVision = "Tubarão";
@@ -97,10 +125,10 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
 
     // Energy MX
     const energy = results.energy_mx || {};
-    const eRazao = energy.Razão || energy.razao || 0;
-    const eAcao = energy.Ação || energy.acao || 0;
-    const eEmocao = energy.Emoção || energy.emocao || 0;
-    const eTotal = energy.Energia || energy.total || (eRazao + eAcao + eEmocao);
+    const eRazao = parseRaw(energy.Razão ?? energy.razao);
+    const eAcao = parseRaw(energy.Ação ?? energy.acao);
+    const eEmocao = parseRaw(energy.Emoção ?? energy.emocao);
+    const eTotal = parseRaw(energy.Energia ?? energy.total) || (eRazao + eAcao + eEmocao);
     const eMax = 135; 
     
     const eMaxScore = Math.max(eRazao, eAcao, eEmocao);
@@ -125,7 +153,7 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
     const powerEntries = Object.entries(power).map(([key, val]) => {
       const typeKey = key.startsWith("Tipo") ? key : `Tipo ${key}`;
       return {
-        type: typeKey, value: Number(val), label: powerMap[typeKey]?.label || typeKey, desc: powerMap[typeKey]?.desc || ""
+        type: typeKey, value: parseRaw(val), label: powerMap[typeKey]?.label || typeKey, desc: powerMap[typeKey]?.desc || ""
       };
     });
     powerEntries.sort((a, b) => b.value - a.value);
@@ -134,22 +162,21 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
 
     // Personality MX
     const personality = results.personality_mx || {};
-    const pAber = personality.Aberto || personality.aberto || 0; const pFech = personality.Fechado || personality.fechado || 0;
+    const pAber = parseRaw(personality.Aberto ?? personality.aberto); const pFech = parseRaw(personality.Fechado ?? personality.fechado);
     const tAberFech = (pAber + pFech) || 11;
-    const pTrad = personality.Tradicional || personality.tradicional || 0; const pInov = personality.Inovador || personality.inovador || 0;
+    const pTrad = parseRaw(personality.Tradicional ?? personality.tradicional); const pInov = parseRaw(personality.Inovador ?? personality.inovador);
     const tTradInov = (pTrad + pInov) || 21;
-    const pPens = personality.Pensador || personality.pensador || 0; const pSent = personality.Sentimento || personality.sentimento || 0;
+    const pPens = parseRaw(personality.Pensador ?? personality.pensador); const pSent = parseRaw(personality.Sentimento ?? personality.sentimento);
     const tPensSent = (pPens + pSent) || 18;
-    const pDeci = personality.Decisivo || personality.decisivo || 0; const pFlex = personality.Flexível || personality.flexivel || 0;
+    const pDeci = parseRaw(personality.Decisivo ?? personality.decisivo); const pFlex = parseRaw(personality.Flexível ?? personality.flexivel);
     const tDeciFlex = (pDeci + pFlex) || 20;
 
     // Player MX
     const player = results.player_mx || {};
     
     const getRawPct = (prof: string, ctx: string) => {
-      const valStr = player[prof]?.[ctx] || player.atual?.[prof.toLowerCase()] || '0%';
-      if (typeof valStr === 'number') return valStr;
-      return parseInt(valStr.replace('%', '')) || 0;
+      const valStr = player[prof]?.[ctx] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0%';
+      return parsePct(valStr);
     };
 
     // Identificar Player MX dominante no contexto "Atual"
