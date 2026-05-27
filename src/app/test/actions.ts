@@ -95,7 +95,7 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
           [testType]: resultPayload,
           raw_answers: updatedRawAnswers
         })
-        .eq("candidate_id", candidateId);
+        .eq("id", existingResult.id);
 
       if (updateError) throw updateError;
     } else {
