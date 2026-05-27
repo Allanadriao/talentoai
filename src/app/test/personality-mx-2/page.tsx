@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
 import { saveAssessmentResult } from "../actions";
+import { personalityMx2Questions } from "@/data/personalityMx2";
 
-export default function PersonalityMx2Test() {
+function PersonalityMx2Content() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const candidateId = searchParams.get("candidate_id") || "";
@@ -148,5 +149,13 @@ export default function PersonalityMx2Test() {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+export default function PersonalityMx2Test() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-[#F8F9FD] flex items-center justify-center">Carregando...</div>}>
+      <PersonalityMx2Content />
+    </React.Suspense>
   );
 }
