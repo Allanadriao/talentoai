@@ -176,7 +176,8 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
     
     const getRawPct = (prof: string, ctx: string) => {
       const normProf = prof.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const valStr = player[prof]?.[ctx] ?? player[ctx]?.[normProf] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0';
+      const normCtx = ctx.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const valStr = player[prof]?.[ctx] ?? player[normCtx]?.[normProf] ?? player[ctx]?.[normProf] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0';
       return parsePct(valStr);
     };
 
@@ -208,7 +209,12 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
       player: {
         dominantPlayer, dominantPlayerColor,
         aparente: { expressivo: getRawPct('Expressivo', 'aparente'), pragmatico: getRawPct('Pragmático', 'aparente'), afavel: getRawPct('Afável', 'aparente'), analitico: getRawPct('Analítico', 'aparente') },
-        atual: pAtual,
+        atual: {
+          expressivo: pAtual.Expressivo,
+          pragmatico: pAtual.Pragmático,
+          afavel: pAtual.Afável,
+          analitico: pAtual.Analítico
+        },
         pressao: { expressivo: getRawPct('Expressivo', 'pressão'), pragmatico: getRawPct('Pragmático', 'pressão'), afavel: getRawPct('Afável', 'pressão'), analitico: getRawPct('Analítico', 'pressão') }
       }
     };
