@@ -175,7 +175,8 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
     const player = results.player_mx || {};
     
     const getRawPct = (prof: string, ctx: string) => {
-      const valStr = player[prof]?.[ctx] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0%';
+      const normProf = prof.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const valStr = player[prof]?.[ctx] ?? player[ctx]?.[normProf] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0';
       return parsePct(valStr);
     };
 
@@ -446,7 +447,7 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
                   <div key={item.type} className="bg-white/10 backdrop-blur-lg border border-white/10 p-6 rounded-3xl hover:bg-white/15 transition-colors">
                     <div className="flex justify-between items-start mb-4">
                       <span className="text-4xl font-black text-white/30 italic">0{idx + 1}</span>
-                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider`}>{item.value}%</span>
+                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider`}>{item.value} PTS</span>
                     </div>
                     <h5 className="font-bold text-lg text-white mb-1">{item.label}</h5>
                     <p className="text-white/60 text-sm font-medium">{item.desc}</p>
@@ -501,14 +502,14 @@ function PlayerRow({ label, color, bg, dataCtx, profile }: { label: string, colo
   const pressao = dataCtx.pressao[profile];
   
   const getBadgeClass = (val: number) => 
-    `inline-flex w-10 h-6 items-center justify-center rounded-lg text-[10px] font-black ${val >= 30 ? bg + ' ' + color + ' shadow-sm' : 'text-slate-400 bg-transparent'}`;
+    `inline-flex w-10 h-6 items-center justify-center rounded-lg text-xs font-black ${val >= 4 ? bg + ' ' + color + ' shadow-sm' : 'text-slate-400 bg-transparent'}`;
 
   return (
     <div className="grid grid-cols-4 items-center p-4 hover:bg-white transition-colors group cursor-default">
       <div className={`font-black text-xs uppercase tracking-wider ${color}`}>{label}</div>
-      <div className="text-center"><span className={getBadgeClass(aparente)}>{aparente}%</span></div>
-      <div className="text-center"><span className={getBadgeClass(atual)}>{atual}%</span></div>
-      <div className="text-center"><span className={getBadgeClass(pressao)}>{pressao}%</span></div>
+      <div className="text-center"><span className={getBadgeClass(aparente)}>{aparente}</span></div>
+      <div className="text-center"><span className={getBadgeClass(atual)}>{atual}</span></div>
+      <div className="text-center"><span className={getBadgeClass(pressao)}>{pressao}</span></div>
     </div>
   );
 }
