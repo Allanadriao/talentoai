@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { fetchAllCandidatesWithRecruiters } from '@/app/actions/admin';
 import { candidateService } from '@/vite_app/services/candidateService';
 import { interviewService } from '@/vite_app/services/interviewService';
 import { Candidate, Interview } from '@/vite_app/types';
@@ -29,6 +30,11 @@ interface LayoutContextType {
   exportToCSV: () => void;
   handleDeleteCandidate: (id: string) => Promise<void>;
   handleDeleteInterview: (id: string) => Promise<void>;
+
+  isAdmin: boolean;
+  recruitersList: string[];
+  selectedRecruiter: string;
+  setSelectedRecruiter: (email: string) => void;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
@@ -45,10 +51,22 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   const [candidateToSchedule, setCandidateToSchedule] = useState<Candidate | null>(null);
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
 
+  // Admin filter states
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [recruitersList, setRecruitersList] = useState<string[]>([]);
+  const [selectedRecruiter, setSelectedRecruiter] = useState('all');
+
   const fetchCandidates = async () => {
     try {
-      const data = await candidateService.fetchCandidates();
+      const { candidates: data, isAdmin, currentUserEmail } = await fetchAllCandidatesWithRecruiters();
       setCandidates(data);
+      setIsAdmin(isAdmin);
+      
+      if (isAdmin) {
+        // Extract unique recruiters
+        const uniqueRecruiters = Array.from(new Set(data.map((c: any) => c.recruiter_email))).filter(Boolean);
+        setRecruitersList(uniqueRecruiters as string[]);
+      }
     } catch (error) {
       console.error('Error fetching candidates:', error);
     }
@@ -68,6 +86,9 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
     try {
       await candidateService.deleteCandidate(id);
       setCandidates(prev => prev.filter(c => c.id !== id));
+      if (selectedCandidate?.id === id) {
+        setSelectedCandidate(null);
+      }
     } catch (error) {
       console.error('Error deleting candidate:', error);
       alert('Erro ao excluir candidato.');
@@ -85,17 +106,25 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const filteredCandidates = useMemo(() => {
+    if (!isAdmin || selectedRecruiter === 'all') {
+      return candidates;
+    }
+    return candidates.filter((c: any) => c.recruiter_email === selectedRecruiter);
+  }, [candidates, isAdmin, selectedRecruiter]);
+
   const exportToCSV = () => {
-    if (candidates.length === 0) return;
+    if (filteredCandidates.length === 0) return;
     
-    const headers = ['Nome', 'Email', 'Cargo', 'Departamento', 'Status', 'Match %'];
-    const rows = candidates.map(c => [
+    const headers = ['Nome', 'Email', 'Cargo', 'Departamento', 'Status', 'Match %', 'Recrutador'];
+    const rows = filteredCandidates.map(c => [
       c.name,
       c.email,
       c.role,
       c.department,
       c.status,
-      c.match_score || 'N/A'
+      c.match_score || 'N/A',
+      (c as any).recruiter_email || 'N/A'
     ]);
 
     const csvContent = [
@@ -125,13 +154,14 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
         searchQuery, setSearchQuery, 
         showForm, setShowForm, 
         isMenuOpen, setIsMenuOpen,
-        candidates, setCandidates,
+        candidates: filteredCandidates, setCandidates,
         interviews, setInterviews,
         fetchCandidates, fetchInterviews,
         showInterviewModal, setShowInterviewModal,
         candidateToSchedule, setCandidateToSchedule,
         selectedCandidate, setSelectedCandidate,
-        exportToCSV, handleDeleteCandidate, handleDeleteInterview
+        exportToCSV, handleDeleteCandidate, handleDeleteInterview,
+        isAdmin, recruitersList, selectedRecruiter, setSelectedRecruiter
       }}
     >
       {children}

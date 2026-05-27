@@ -157,8 +157,8 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
       };
     });
     powerEntries.sort((a, b) => b.value - a.value);
-    const topPower = powerEntries.slice(0, 3);
-    const powerColors = ["bg-rose-500", "bg-indigo-500", "bg-sky-500"];
+    const topPower = powerEntries;
+    const powerColors = ["bg-rose-500", "bg-indigo-500", "bg-sky-500", "bg-emerald-500", "bg-amber-500", "bg-purple-500", "bg-teal-500", "bg-fuchsia-500", "bg-orange-500"];
 
     // Personality MX
     const personality = results.personality_mx || {};
@@ -438,7 +438,7 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
                   <div className="p-3 bg-white/10 backdrop-blur-md text-white rounded-xl"><Sparkles size={24} /></div>
                   <h4 className="font-black text-2xl text-white tracking-tight">Power MX (Eneagrama)</h4>
                 </div>
-                <span className="hidden sm:inline-block px-3 py-1 bg-white/10 text-white/80 text-xs font-bold rounded-full border border-white/10">Top 3 Traços</span>
+                <span className="hidden sm:inline-block px-3 py-1 bg-white/10 text-white/80 text-xs font-bold rounded-full border border-white/10">Todos os 9 Traços</span>
               </div>
 
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
