@@ -118,7 +118,10 @@ export function PowerItem({ rank, label, desc, value, color }: any) {
 
 export function ReportActionCard({ title, desc, icon: Icon, color, onClick }: any) {
   return (
-    <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex items-center justify-between group">
+    <div 
+      onClick={onClick}
+      className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex items-center justify-between group cursor-pointer"
+    >
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 bg-slate-50 ${color} rounded-2xl flex items-center justify-center`}>
           <Icon size={24} />
@@ -129,8 +132,7 @@ export function ReportActionCard({ title, desc, icon: Icon, color, onClick }: an
         </div>
       </div>
       <button 
-        onClick={onClick}
-        className="p-2 bg-slate-50 text-slate-900 rounded-lg border border-slate-100 hover:bg-slate-900 hover:text-white transition-all"
+        className="p-2 bg-slate-50 text-slate-900 rounded-lg border border-slate-100 group-hover:bg-slate-900 group-hover:text-white transition-all"
       >
         <Download size={18} />
       </button>
