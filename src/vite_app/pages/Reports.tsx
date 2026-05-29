@@ -225,9 +225,9 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
   return (
     <motion.div key="reports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8 pb-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <ReportActionCard title="Relatório Individual" desc="PDF detalhado por candidato" icon={FileText} color="text-indigo-600" />
-        <ReportActionCard title="Relatório Comparativo" desc="Compare múltiplos candidatos" icon={BarChart3} color="text-emerald-600" />
-        <ReportActionCard title="Análise de Equipe" desc="Distribuição de perfis" icon={Users} color="text-purple-600" />
+        <ReportActionCard title="Relatório Individual" desc="PDF detalhado por candidato" icon={FileText} color="text-indigo-600" onClick={() => window.print()} />
+        <ReportActionCard title="Relatório Comparativo" desc="Compare múltiplos candidatos" icon={BarChart3} color="text-emerald-600" onClick={() => window.print()} />
+        <ReportActionCard title="Análise de Equipe" desc="Distribuição de perfis" icon={Users} color="text-purple-600" onClick={() => window.print()} />
       </div>
 
       <div className="bg-white/70 backdrop-blur-xl p-4 lg:p-8 rounded-[2rem] border border-white shadow-xl shadow-slate-200/50">
