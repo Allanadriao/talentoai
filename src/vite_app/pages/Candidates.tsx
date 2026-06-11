@@ -215,18 +215,18 @@ export default function Candidates({
                 <td className="px-8 py-5">
                   <div className="flex flex-col gap-1.5 w-full max-w-[140px]">
                     <div className="flex items-center justify-between text-[10px] font-bold">
-                      <span className={c.progress === 4 ? 'text-emerald-600' : 'text-indigo-600'}>
-                        {Math.round((c.progress / 4) * 100)}%
+                      <span className={c.progress === 5 ? 'text-emerald-600' : 'text-indigo-600'}>
+                        {Math.round((c.progress / 5) * 100)}%
                       </span>
-                      <span className="text-slate-400">{c.progress}/4</span>
+                      <span className="text-slate-400">{c.progress}/5</span>
                     </div>
                     <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden flex gap-0.5 p-0.5">
-                      {[1, 2, 3, 4].map(step => (
+                      {[1, 2, 3, 4, 5].map(step => (
                         <div 
                           key={step}
                           className={`h-full flex-grow rounded-full transition-all duration-500 ${
                             step <= c.progress 
-                              ? (c.progress === 4 ? 'bg-emerald-500' : 'bg-indigo-500') 
+                              ? (c.progress === 5 ? 'bg-emerald-500' : 'bg-indigo-500') 
                               : 'bg-slate-200'
                           }`}
                         />
