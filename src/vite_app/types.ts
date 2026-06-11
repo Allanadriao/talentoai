@@ -2,11 +2,13 @@ export interface Candidate {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   role: string;
   department: string;
   status: 'Completo' | 'Em Progresso' | 'Pendente';
   progress: number;
   match_score?: number;
+  interview_date?: string;
   created_at?: string;
 }
 
