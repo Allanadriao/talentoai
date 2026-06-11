@@ -337,9 +337,9 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
                   </div>
                   
                   <div className="w-full space-y-5">
-                    <ProfileBar label="Razão" value={Math.round((data.energy.eRazao/45)*100)} color="bg-indigo-500" />
-                    <ProfileBar label="Ação" value={Math.round((data.energy.eAcao/45)*100)} color="bg-orange-500" />
-                    <ProfileBar label="Emoção" value={Math.round((data.energy.eEmocao/45)*100)} color="bg-rose-500" />
+                    <ProfileBar label="Razão" value={data.energy.eRazao} widthPct={Math.round((data.energy.eRazao/45)*100)} suffix="" color="bg-indigo-500" />
+                    <ProfileBar label="Ação" value={data.energy.eAcao} widthPct={Math.round((data.energy.eAcao/45)*100)} suffix="" color="bg-orange-500" />
+                    <ProfileBar label="Emoção" value={data.energy.eEmocao} widthPct={Math.round((data.energy.eEmocao/45)*100)} suffix="" color="bg-rose-500" />
                   </div>
                 </div>
                 

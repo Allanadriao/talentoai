@@ -72,13 +72,7 @@ function PowerMxContent() {
       }
     });
 
-    // Aplica a regra (Soma * 100 / 180) para dar o máximo de ~111
-    const finalResults: Record<ParteType, number> = { ...results };
-    (Object.keys(finalResults) as unknown as ParteType[]).forEach(key => {
-      finalResults[key] = Math.round((results[key] * 100) / 180);
-    });
-
-    return finalResults;
+    return results;
   };
 
   return (
@@ -186,7 +180,7 @@ function PowerMxContent() {
                 Teste Concluído!
               </h2>
               <p className="text-slate-500 text-center mb-10 font-medium">
-                Aqui está o resumo do seu perfil Power MX (Máximo = 111)
+                Aqui está o resumo do seu perfil Power MX
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

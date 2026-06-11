@@ -70,17 +70,18 @@ export function AssessmentCardLarge({ title, desc, time, questions, color, icon:
   );
 }
 
-export function ProfileBar({ label, value, color }: any) {
+export function ProfileBar({ label, value, color, suffix = "%", widthPct }: any) {
+  const width = widthPct !== undefined ? widthPct : value;
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-[10px] font-bold">
         <span className="text-slate-900">{label}</span>
-        <span className="text-slate-400">{value}%</span>
+        <span className="text-slate-400">{value}{suffix}</span>
       </div>
       <div className="w-full h-2 bg-slate-50 rounded-full overflow-hidden">
         <motion.div 
           initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
+          animate={{ width: `${width}%` }}
           transition={{ duration: 1, ease: "easeOut" }}
           className={`h-full ${color}`} 
         />
@@ -89,7 +90,8 @@ export function ProfileBar({ label, value, color }: any) {
   );
 }
 
-export function PowerItem({ rank, label, desc, value, color }: any) {
+export function PowerItem({ rank, label, desc, value, color, suffix = " PTS", maxValue = 200 }: any) {
+  const widthPct = Math.min(100, Math.round((value / maxValue) * 100));
   return (
     <div className="flex items-center gap-4">
       <div className={`w-8 h-8 rounded-full ${color} text-white flex items-center justify-center text-xs font-bold flex-shrink-0`}>
@@ -101,12 +103,12 @@ export function PowerItem({ rank, label, desc, value, color }: any) {
             <p className="text-xs font-bold">{label}</p>
             <p className="text-[10px] text-slate-400 font-medium">{desc}</p>
           </div>
-          <span className={`text-[10px] font-bold ${color.replace('bg-', 'text-')}`}>{value}%</span>
+          <span className={`text-[10px] font-bold ${color.replace('bg-', 'text-')}`}>{value}{suffix}</span>
         </div>
         <div className="w-full h-1.5 bg-slate-50 rounded-full overflow-hidden">
           <motion.div 
             initial={{ width: 0 }}
-            animate={{ width: `${value}%` }}
+            animate={{ width: `${widthPct}%` }}
             transition={{ duration: 1, delay: rank * 0.2 }}
             className={`h-full ${color}`} 
           />
