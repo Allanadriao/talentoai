@@ -32,14 +32,12 @@ function PersonalityMx2Content() {
   }, [currentStep, showResults]);
 
   const handleAnswer = (value: number) => {
-    setIsTransitioning(true);
     const newAnswers = { ...answers, [currentQuestion.id]: value };
     setAnswers(newAnswers);
     
     setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
-        setIsTransitioning(false);
       } else {
         setShowResults(true);
         if (candidateId) {
@@ -50,7 +48,6 @@ function PersonalityMx2Content() {
           await saveAssessmentResult(candidateId, "personality_mx", finalResults, newAnswers, requiredCount);
           setIsSaving(false);
         }
-        setIsTransitioning(false);
       }
     }, 400);
   };
