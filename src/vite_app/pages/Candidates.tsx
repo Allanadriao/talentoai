@@ -195,7 +195,7 @@ export default function Candidates({
                     c.status === 'Em Progresso' ? 'bg-orange-50 text-orange-600 border-orange-100' :
                     'bg-slate-50 text-slate-400 border-slate-100'
                   }`}>
-                    {c.status}
+                    {c.status === 'Completo' && c.progress < 5 ? 'Concluído (Parcial)' : c.status}
                   </span>
                 </td>
                 <td className="px-8 py-5">
@@ -215,10 +215,12 @@ export default function Candidates({
                 <td className="px-8 py-5">
                   <div className="flex flex-col gap-1.5 w-full max-w-[140px]">
                     <div className="flex items-center justify-between text-[10px] font-bold">
-                      <span className={c.progress === 5 ? 'text-emerald-600' : 'text-indigo-600'}>
+                      <span className={c.status === 'Completo' ? 'text-emerald-600' : 'text-indigo-600'}>
                         {Math.round((c.progress / 5) * 100)}%
                       </span>
-                      <span className="text-slate-400">{c.progress}/5</span>
+                      <span className="text-slate-400">
+                        {c.progress}/5 {c.status === 'Completo' && c.progress < 5 && <span className="text-emerald-500 ml-1">(Designados)</span>}
+                      </span>
                     </div>
                     <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden flex gap-0.5 p-0.5">
                       {[1, 2, 3, 4, 5].map(step => (
@@ -226,7 +228,7 @@ export default function Candidates({
                           key={step}
                           className={`h-full flex-grow rounded-full transition-all duration-500 ${
                             step <= c.progress 
-                              ? (c.progress === 5 ? 'bg-emerald-500' : 'bg-indigo-500') 
+                              ? (c.status === 'Completo' ? 'bg-emerald-500' : 'bg-indigo-500') 
                               : 'bg-slate-200'
                           }`}
                         />

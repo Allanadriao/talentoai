@@ -32,18 +32,25 @@ function PersonalityMx2Content() {
   }, [currentStep, showResults]);
 
   const handleAnswer = (value: number) => {
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
+    setIsTransitioning(true);
+    const newAnswers = { ...answers, [currentQuestion.id]: value };
+    setAnswers(newAnswers);
+    
     setTimeout(async () => {
       if (currentStep < totalQuestions - 1) {
         setCurrentStep((prev) => prev + 1);
+        setIsTransitioning(false);
       } else {
         setShowResults(true);
         if (candidateId) {
           setIsSaving(true);
-          // Assuming we just save answers, since there is no calculateResults for personality-mx-2
-          await saveAssessmentResult(candidateId, "personality_mx", { fromScale: true }, answers);
+          const finalResults = { fromScale: true };
+          const tParam = searchParams.get("t");
+          const requiredCount = tParam ? tParam.split(',').length : 5;
+          await saveAssessmentResult(candidateId, "personality_mx", finalResults, newAnswers, requiredCount);
           setIsSaving(false);
         }
+        setIsTransitioning(false);
       }
     }, 400);
   };

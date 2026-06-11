@@ -50,7 +50,7 @@ export async function createPublicCandidate(recruiterId: string, name: string, e
 }
 
 
-export async function saveAssessmentResult(candidateId: string, testType: TestType, resultPayload: any, rawAnswersPayload?: any) {
+export async function saveAssessmentResult(candidateId: string, testType: TestType, resultPayload: any, rawAnswersPayload?: any, requiredCount: number = 5) {
   if (!candidateId) {
     return { success: false, error: "ID do candidato não informado." };
   }
@@ -114,7 +114,7 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
 
     // Atualiza o progresso e calcula match_score se concluído
     const newProgress = isNewTestForCandidate ? (candidate.progress || 0) + 1 : candidate.progress || 0;
-    const newStatus = newProgress >= 5 ? 'Completo' : 'Em Progresso';
+    const newStatus = newProgress >= requiredCount ? 'Completo' : 'Em Progresso';
     
     let matchScore = null;
     

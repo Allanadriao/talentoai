@@ -48,7 +48,9 @@ function PersonalityMxContent() {
         if (candidateId) {
           setIsSaving(true);
           const finalResults = calculateResults(newAnswers);
-          await saveAssessmentResult(candidateId, "personality_mx", finalResults, newAnswers);
+          const tParam = searchParams.get("t");
+          const requiredCount = tParam ? tParam.split(',').length : 5;
+          await saveAssessmentResult(candidateId, "personality_mx", finalResults, newAnswers, requiredCount);
           setIsSaving(false);
         }
         setIsTransitioning(false);

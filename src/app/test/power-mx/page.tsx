@@ -53,7 +53,9 @@ function PowerMxContent() {
       if (candidateId) {
         setIsSaving(true);
         const finalResults = calculateResults(answers);
-        await saveAssessmentResult(candidateId, "power_mx", finalResults, answers);
+        const tParam = searchParams.get("t");
+        const requiredCount = tParam ? tParam.split(',').length : 5;
+        await saveAssessmentResult(candidateId, "power_mx", finalResults, answers, requiredCount);
         setIsSaving(false);
       }
     }

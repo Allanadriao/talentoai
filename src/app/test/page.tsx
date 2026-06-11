@@ -136,9 +136,9 @@ export default async function TestDashboard({
             if (isCompleted) {
               return <div key={index}>{cardContent}</div>;
             }
-            
+            const tParam = allowedTests ? `&t=${allowedTests.join(',')}` : '';
             return (
-              <Link key={index} href={test.href !== '#' && candidateId ? `${test.href}?candidate_id=${candidateId}` : test.href}>
+              <Link key={index} href={test.href !== '#' && candidateId ? `${test.href}?candidate_id=${candidateId}${tParam}` : test.href}>
                 {cardContent}
               </Link>
             );
