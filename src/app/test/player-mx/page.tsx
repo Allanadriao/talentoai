@@ -75,18 +75,18 @@ function PlayerMxContent() {
     });
 
     // Converte para porcentagem
-    const percentages: Record<PlayerProfile, Record<PlayerContext, string>> = {
-      Pragmático: { atual: '0%', aparente: '0%', pressão: '0%' },
-      Expressivo: { atual: '0%', aparente: '0%', pressão: '0%' },
-      Afável: { atual: '0%', aparente: '0%', pressão: '0%' },
-      Analítico: { atual: '0%', aparente: '0%', pressão: '0%' },
+    const percentages: Record<PlayerProfile, Record<PlayerContext, number>> = {
+      Pragmático: { atual: 0, aparente: 0, pressão: 0 },
+      Expressivo: { atual: 0, aparente: 0, pressão: 0 },
+      Afável: { atual: 0, aparente: 0, pressão: 0 },
+      Analítico: { atual: 0, aparente: 0, pressão: 0 },
     };
 
     profiles.forEach(prof => {
       contexts.forEach(ctx => {
         const total = contextTotals[ctx];
         if (total > 0) {
-          percentages[prof][ctx] = Math.round((counts[ctx][prof] / total) * 100) + "%";
+          percentages[prof][ctx] = Math.round((counts[ctx][prof] / total) * 100);
         }
       });
     });
@@ -197,15 +197,15 @@ function PlayerMxContent() {
                     <div className="flex-1 grid grid-cols-3 gap-2">
                       <div className="text-center">
                         <span className="block text-xs font-bold text-slate-400 uppercase">Aparente</span>
-                        <span className="text-lg font-bold text-slate-800">{contexts.aparente}</span>
+                        <span className="text-lg font-bold text-slate-800">{contexts.aparente}%</span>
                       </div>
                       <div className="text-center border-l border-slate-200">
                         <span className="block text-xs font-bold text-slate-400 uppercase">Atual</span>
-                        <span className="text-lg font-bold text-slate-800">{contexts.atual}</span>
+                        <span className="text-lg font-bold text-slate-800">{contexts.atual}%</span>
                       </div>
                       <div className="text-center border-l border-slate-200">
                         <span className="block text-xs font-bold text-slate-400 uppercase">Pressão</span>
-                        <span className="text-lg font-bold text-slate-800">{contexts.pressão}</span>
+                        <span className="text-lg font-bold text-slate-800">{contexts.pressão}%</span>
                       </div>
                     </div>
                   </div>

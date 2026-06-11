@@ -114,7 +114,7 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
 
     // Atualiza o progresso e calcula match_score se concluído
     const newProgress = isNewTestForCandidate ? (candidate.progress || 0) + 1 : candidate.progress || 0;
-    const newStatus = newProgress >= 4 ? 'Completo' : 'Em Progresso';
+    const newStatus = newProgress >= 5 ? 'Completo' : 'Em Progresso';
     
     let matchScore = null;
     
@@ -133,40 +133,86 @@ export async function saveAssessmentResult(candidateId: string, testType: TestTy
         let totalDiff = 0;
         let totalPossibleDiff = 0;
         
-        // Default Ideal Profile
-        const ideal = {
+        // Fetch Ideal Profile from DB or use default
+        let ideal = {
           energy: { razao: 39, acao: 34, emocao: 37, total: 110 },
           vision: { alien: 16, robo: 48, mamifero: 12, tubarao: 24 },
-          personality: { aberto: 4, fechado: 6, tradicional: 13, inovador: 7, pensador: 9, sentimento: 11, decisivo: 12, flexivel: 8 }
+          personality: { aberto: 4, fechado: 6, tradicional: 13, inovador: 7, pensador: 9, sentimento: 11, decisivo: 12, flexivel: 8 },
+          player: { pragmatico: 50, expressivo: 50, afavel: 50, analitico: 50 },
+          power: { tipo1: 100, tipo2: 100, tipo3: 100, tipo4: 100, tipo5: 100, tipo6: 100, tipo7: 100, tipo8: 100, tipo9: 100 }
         };
+
+        try {
+          const { data: settingsData } = await supabase.from('system_settings').select('setting_value').eq('setting_key', 'ideal_profile').single();
+          if (settingsData && settingsData.setting_value) {
+            ideal = settingsData.setting_value;
+          }
+        } catch (e) {
+          console.warn("Could not fetch ideal_profile from DB, using fallback.", e);
+        }
         
-        // Energy Match
+        // Energy Match (Raw scores, max per trait ~45)
         if (fullResults.energy_mx) {
+          const energyMap = { razao: 'Razão', acao: 'Ação', emocao: 'Emoção' };
           ['razao', 'acao', 'emocao'].forEach(key => {
             const idl = (ideal.energy as any)[key];
-            const act = fullResults.energy_mx[key] || 0;
+            const act = fullResults.energy_mx[(energyMap as any)[key]] || 0;
             totalDiff += Math.abs(idl - act);
-            totalPossibleDiff += Math.max(idl, 50);
+            totalPossibleDiff += Math.max(idl, 45 - idl); // max possible difference
           });
         }
         
-        // Vision Match
+        // Vision Match (Percentage scores, 0-100)
         if (fullResults.vision_mx) {
+          const visionMap = { alien: 'Alien', robo: 'Robô', mamifero: 'Mamífero', tubarao: 'Tubarão' };
           ['alien', 'robo', 'mamifero', 'tubarao'].forEach(key => {
             const idl = (ideal.vision as any)[key];
-            const act = fullResults.vision_mx[key] || 0;
+            const rawAct = fullResults.vision_mx[(visionMap as any)[key]];
+            const act = typeof rawAct === 'string' ? parseInt(rawAct.replace('%', '')) || 0 : rawAct || 0;
             totalDiff += Math.abs(idl - act);
-            totalPossibleDiff += 25;
+            totalPossibleDiff += Math.max(idl, 100 - idl);
           });
         }
         
-        // Personality Match
+        // Personality Match (Raw scores per dichotomy)
         if (fullResults.personality_mx) {
+          const persMap = { aberto: 'Aberto', fechado: 'Fechado', tradicional: 'Tradicional', inovador: 'Inovador', pensador: 'Pensador', sentimento: 'Sentimento', decisivo: 'Decisivo', flexivel: 'Flexível' };
           ['aberto', 'fechado', 'tradicional', 'inovador', 'pensador', 'sentimento', 'decisivo', 'flexivel'].forEach(key => {
             const idl = (ideal.personality as any)[key];
-            const act = fullResults.personality_mx[key] || 0;
+            const act = fullResults.personality_mx[(persMap as any)[key]] || 0;
             totalDiff += Math.abs(idl - act);
-            totalPossibleDiff += 70;
+            // Since max points per dichotomy vary (e.g. 11, 21), approximating max diff
+            totalPossibleDiff += Math.max(idl, 20); 
+          });
+        }
+
+        // Player Match (Using average of Aparente, Atual, Pressão)
+        if (fullResults.player_mx && ideal.player) {
+          const playerMap = { pragmatico: 'Pragmático', expressivo: 'Expressivo', afavel: 'Afável', analitico: 'Analítico' };
+          ['pragmatico', 'expressivo', 'afavel', 'analitico'].forEach(key => {
+            const idl = (ideal.player as any)[key];
+            const prof = (playerMap as any)[key];
+            const profileData = fullResults.player_mx[prof] || { aparente: 0, atual: 0, pressão: 0 };
+            
+            const pAp = typeof profileData.aparente === 'string' ? parseInt(profileData.aparente.replace('%', '')) || 0 : profileData.aparente || 0;
+            const pAt = typeof profileData.atual === 'string' ? parseInt(profileData.atual.replace('%', '')) || 0 : profileData.atual || 0;
+            const pPr = typeof profileData.pressão === 'string' ? parseInt(profileData.pressão.replace('%', '')) || 0 : profileData.pressão || 0;
+            
+            const act = Math.round((pAp + pAt + pPr) / 3);
+            
+            totalDiff += Math.abs(idl - act);
+            totalPossibleDiff += Math.max(idl, 100 - idl);
+          });
+        }
+
+        // Power Match (Scores up to 200)
+        if (fullResults.power_mx && ideal.power) {
+          const powerMap = { tipo1: 'Tipo 1', tipo2: 'Tipo 2', tipo3: 'Tipo 3', tipo4: 'Tipo 4', tipo5: 'Tipo 5', tipo6: 'Tipo 6', tipo7: 'Tipo 7', tipo8: 'Tipo 8', tipo9: 'Tipo 9' };
+          ['tipo1', 'tipo2', 'tipo3', 'tipo4', 'tipo5', 'tipo6', 'tipo7', 'tipo8', 'tipo9'].forEach(key => {
+            const idl = (ideal.power as any)[key];
+            const act = fullResults.power_mx[(powerMap as any)[key]] || 0;
+            totalDiff += Math.abs(idl - act);
+            totalPossibleDiff += Math.max(idl, 200 - idl);
           });
         }
         

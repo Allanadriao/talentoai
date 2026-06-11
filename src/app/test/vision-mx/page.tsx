@@ -75,12 +75,12 @@ function VisionMxContent() {
     });
 
     // Converter para porcentagem
-    const percentages: Record<VisionProfile, string> = {
-      Alien: "0%", Robô: "0%", Mamífero: "0%", Tubarão: "0%"
+    const percentages: Record<VisionProfile, number> = {
+      Alien: 0, Robô: 0, Mamífero: 0, Tubarão: 0
     };
 
     (Object.keys(results) as VisionProfile[]).forEach(key => {
-      percentages[key] = Math.round((results[key] / totalQuestions) * 100) + "%";
+      percentages[key] = Math.round((results[key] / totalQuestions) * 100);
     });
 
     return percentages;
@@ -176,7 +176,7 @@ function VisionMxContent() {
                       {key}
                     </p>
                     <span className="text-3xl font-black text-indigo-700">
-                      {value}
+                      {value}%
                     </span>
                   </div>
                 ))}
