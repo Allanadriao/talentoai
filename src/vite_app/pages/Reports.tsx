@@ -287,7 +287,7 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
                   <div key={item.type} className="bg-white/10 backdrop-blur-lg border border-white/10 p-6 rounded-3xl hover:bg-white/15 transition-colors">
                     <div className="flex justify-between items-start mb-4">
                       <span className="text-4xl font-black text-white/30 italic">0{idx + 1}</span>
-                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider`}>{item.value} PTS</span>
+                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider whitespace-nowrap`}>{item.value} PTS</span>
                     </div>
                     <h5 className="font-bold text-lg text-white mb-1">{item.label}</h5>
                     <p className="text-white/60 text-sm font-medium">{item.desc}</p>

@@ -127,7 +127,7 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
 
     // Power MX Calculation
     POWER_MX_QUESTIONS.forEach(q => {
-      const val = answers[`power_${q.id}`] || 0;
+      const val = Number(answers[`power_${q.id}`]) || 0;
       const cat = q.category; // e.g., "Tipo 1"
       if (!results.power[cat]) results.power[cat] = 0;
       results.power[cat] += val;

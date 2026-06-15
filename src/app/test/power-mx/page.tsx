@@ -68,9 +68,10 @@ function PowerMxContent() {
 
     // Soma bruta (0 a 10)
     Object.entries(currentAnswers).forEach(([qId, value]) => {
-      const q = powerMxQuestions.find((q) => q.id === Number(qId));
-      if (q) {
-        results[q.parte] += value;
+      const numericQId = Number(qId);
+      const q = powerMxQuestions.find((q) => q.id === numericQId);
+      if (q && q.parte >= 1 && q.parte <= 9) {
+        results[q.parte as ParteType] += Number(value) || 0;
       }
     });
 
