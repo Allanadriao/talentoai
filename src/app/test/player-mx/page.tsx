@@ -86,10 +86,8 @@ function PlayerMxContent() {
 
     profiles.forEach(prof => {
       contexts.forEach(ctx => {
-        const total = contextTotals[ctx];
-        if (total > 0) {
-          percentages[prof][ctx] = Math.round((counts[ctx][prof] / total) * 100);
-        }
+        // Excel formula uses *100/1500 which is equivalent to dividing by 15
+        percentages[prof][ctx] = Math.round((counts[ctx][prof] / 15) * 100);
       });
     });
 

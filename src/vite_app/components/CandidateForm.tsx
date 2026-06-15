@@ -94,12 +94,18 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
     });
 
     // Vision MX Calculation
+    const tempVision = { alien: 0, robo: 0, mamifero: 0, tubarao: 0 };
     VISION_MX_QUESTIONS.forEach(q => {
       const val = answers[`vision_${q.id}`];
-      if (val === 'A') results.vision.alien++;
-      if (val === 'B') results.vision.robo++;
-      if (val === 'C') results.vision.mamifero++;
-      if (val === 'D') results.vision.tubarao++;
+      if (val === 'A') tempVision.alien++;
+      if (val === 'B') tempVision.robo++;
+      if (val === 'C') tempVision.mamifero++;
+      if (val === 'D') tempVision.tubarao++;
+    });
+    
+    // Excel formula: * 100 / 25
+    Object.keys(tempVision).forEach(key => {
+      results.vision[key] = Math.round((tempVision[key as keyof typeof tempVision] * 100) / 25);
     });
 
     // Personality MX Calculation
@@ -113,24 +119,44 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
     });
 
     // Player MX Calculation
+    const tempPlayer: Record<string, Record<string, number>> = {
+      atual: { pragmatico: 0, expressivo: 0, afavel: 0, analitico: 0 },
+      aparente: { pragmatico: 0, expressivo: 0, afavel: 0, analitico: 0 },
+      pressao: { pragmatico: 0, expressivo: 0, afavel: 0, analitico: 0 }
+    };
+    
     PLAYER_MX_QUESTIONS.forEach(q => {
       const val = answers[`player_${q.id}`];
       const option = q.options?.find(o => o.value === val);
       if (option && q.condition) {
         const cat = option.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const cond = q.condition.toLowerCase();
-        if (results.player[cond] && results.player[cond][cat] !== undefined) {
-          results.player[cond][cat]++;
+        if (tempPlayer[cond] && tempPlayer[cond][cat] !== undefined) {
+          tempPlayer[cond][cat]++;
         }
       }
     });
 
+    // Excel formula: =SOMASES(...) * 100 / 1500 (equivalent to dividing by 15)
+    Object.keys(tempPlayer).forEach(cond => {
+      Object.keys(tempPlayer[cond]).forEach(cat => {
+        if (!results.player[cond]) results.player[cond] = {};
+        results.player[cond][cat] = Math.round((tempPlayer[cond][cat] / 15) * 100);
+      });
+    });
+
     // Power MX Calculation
+    const tempPower: Record<string, number> = {};
     POWER_MX_QUESTIONS.forEach(q => {
       const val = Number(answers[`power_${q.id}`]) || 0;
       const cat = q.category; // e.g., "Tipo 1"
-      if (!results.power[cat]) results.power[cat] = 0;
-      results.power[cat] += val;
+      if (!tempPower[cat]) tempPower[cat] = 0;
+      tempPower[cat] += val;
+    });
+
+    // Excel formula: =SOMASE(...) * 100 / 180
+    Object.keys(tempPower).forEach(cat => {
+      results.power[cat] = Math.round((tempPower[cat] * 100) / 180);
     });
 
     // Calculate Match Score

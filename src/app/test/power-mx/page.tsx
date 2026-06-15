@@ -66,13 +66,17 @@ function PowerMxContent() {
       1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0
     };
 
-    // Soma bruta (0 a 10)
     Object.entries(currentAnswers).forEach(([qId, value]) => {
       const numericQId = Number(qId);
       const q = powerMxQuestions.find((q) => q.id === numericQId);
       if (q && q.parte >= 1 && q.parte <= 9) {
         results[q.parte as ParteType] += Number(value) || 0;
       }
+    });
+
+    // Excel formula: =SOMASE(...) * 100 / 180
+    (Object.keys(results) as unknown as ParteType[]).forEach(parte => {
+      results[parte] = Math.round((results[parte] * 100) / 180);
     });
 
     return results;
