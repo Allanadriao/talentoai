@@ -9,11 +9,16 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { candidateName, data, role } = body;
 
+    // Acessar via bracket notation impede que o Webpack (Next.js) faça substituição estática no build
+    const apiKey = process.env['OPENAI_API_KEY'] || process.env['OPENAI_API_KEY_TALENTOAI'];
+
+    if (!apiKey) {
+      throw new Error('API Key não encontrada no ambiente de execução do Node.js.');
+    }
+
     const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: apiKey,
     });
-
-
 
     if (!candidateName || !data) {
       return NextResponse.json(
