@@ -18,7 +18,9 @@ function PowerMxContent() {
   const [isSaving, setIsSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const currentQuestions = powerMxQuestions.filter(q => q.parte === currentParte);
+  const questionsPerPage = 20;
+  const startIndex = (currentParte - 1) * questionsPerPage;
+  const currentQuestions = powerMxQuestions.slice(startIndex, startIndex + questionsPerPage);
   const totalPartes = 9;
 
   React.useEffect(() => {
@@ -137,7 +139,7 @@ function PowerMxContent() {
                 {currentQuestions.map((q, index) => (
                   <div key={q.id} className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                     <p className="text-lg font-bold text-slate-800 mb-6">
-                      <span className="text-indigo-500 mr-2">{index + 1}.</span> {q.text}
+                      <span className="text-indigo-500 mr-2">{q.id}.</span> {q.text}
                     </p>
                     <div className="flex flex-wrap justify-center sm:justify-between gap-1.5 sm:gap-2">
                       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
