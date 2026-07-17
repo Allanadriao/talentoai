@@ -2,16 +2,16 @@ import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { SYSTEM_PROMPT_CRITERIA } from '@/config/aiPrompt';
 
-// Initialize the OpenAI client
-// Note: Requires OPENAI_API_KEY environment variable to be set
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
+// OpenAI client will be initialized inside the request handler
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { candidateName, data, role } = body;
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
 
 
@@ -96,8 +96,13 @@ ${SYSTEM_PROMPT_CRITERIA}`
     return NextResponse.json({ analysis });
   } catch (error: any) {
     console.error('Error generating AI synthesis:', error);
+    
+    // DEBUG: Check which OPENAI keys exist in process.env
+    const envKeys = Object.keys(process.env).filter(k => k.toLowerCase().includes('open')).join(', ');
+    const debugInfo = envKeys ? `Chaves encontradas: ${envKeys}` : 'Nenhuma chave com OPENAI encontrada.';
+
     return NextResponse.json(
-      { error: error.message || 'Ocorreu um erro ao gerar a análise com a OpenAI.' },
+      { error: (error.message || 'Ocorreu um erro ao gerar a análise com a OpenAI.') + ` [DEBUG: ${debugInfo}]` },
       { status: 500 }
     );
   }
