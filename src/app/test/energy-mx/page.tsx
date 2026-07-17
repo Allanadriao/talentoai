@@ -70,9 +70,13 @@ function EnergyMxContent() {
       const q = energyMxQuestions.find((q) => q.id === Number(qId));
       if (q) {
         results[q.profile] += value;
-        results.Energia += value;
       }
     });
+
+    results.Energia = results.Razão + results.Ação + results.Emoção;
+    results.Razão = Math.round((results.Razão * 100) / 45);
+    results.Ação = Math.round((results.Ação * 100) / 45);
+    results.Emoção = Math.round((results.Emoção * 100) / 45);
 
     return results;
   };

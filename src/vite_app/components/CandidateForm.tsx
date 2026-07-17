@@ -83,15 +83,19 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
       power: {}
     };
 
-    // Energy MX Calculation
+    // Energy MX Calculation - Convert to percentage (max 45 per category, total 135)
     ENERGY_MX_QUESTIONS.forEach(q => {
       const val = answers[`energy_${q.id}`] || 0;
       const cat = q.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       if (cat === 'razao') results.energy.razao += val;
       if (cat === 'acao') results.energy.acao += val;
       if (cat === 'emocao') results.energy.emocao += val;
-      results.energy.total += val;
     });
+    
+    results.energy.total = results.energy.razao + results.energy.acao + results.energy.emocao;
+    results.energy.razao = Math.round((results.energy.razao * 100) / 45);
+    results.energy.acao = Math.round((results.energy.acao * 100) / 45);
+    results.energy.emocao = Math.round((results.energy.emocao * 100) / 45);
 
     // Vision MX Calculation
     const tempVision = { alien: 0, robo: 0, mamifero: 0, tubarao: 0 };
@@ -108,15 +112,33 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
       results.vision[key] = Math.round((tempVision[key as keyof typeof tempVision] * 100) / 25);
     });
 
-    // Personality MX Calculation
+    // Personality MX Calculation - Convert dichotomies to percentages
+    const tempPersonality = { aberto: 0, fechado: 0, tradicional: 0, inovador: 0, pensador: 0, sentimento: 0, decisivo: 0, flexivel: 0 };
     PERSONALITY_MX_QUESTIONS.forEach(q => {
       const val = answers[`personality_${q.id}`];
       const option = q.options?.find(o => o.value === val);
       if (option) {
-        const cat = option.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        if (results.personality[cat] !== undefined) results.personality[cat]++;
+        const cat = option.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") as keyof typeof tempPersonality;
+        if (tempPersonality[cat] !== undefined) tempPersonality[cat]++;
       }
     });
+    
+    // Personality Rules of 3
+    const tAberFech = (tempPersonality.aberto + tempPersonality.fechado) || 11;
+    results.personality.aberto = Math.round((tempPersonality.aberto / tAberFech) * 100);
+    results.personality.fechado = Math.round((tempPersonality.fechado / tAberFech) * 100);
+
+    const tTradInov = (tempPersonality.tradicional + tempPersonality.inovador) || 21;
+    results.personality.tradicional = Math.round((tempPersonality.tradicional / tTradInov) * 100);
+    results.personality.inovador = Math.round((tempPersonality.inovador / tTradInov) * 100);
+
+    const tPensSent = (tempPersonality.pensador + tempPersonality.sentimento) || 18;
+    results.personality.pensador = Math.round((tempPersonality.pensador / tPensSent) * 100);
+    results.personality.sentimento = Math.round((tempPersonality.sentimento / tPensSent) * 100);
+
+    const tDeciFlex = (tempPersonality.decisivo + tempPersonality.flexivel) || 20;
+    results.personality.decisivo = Math.round((tempPersonality.decisivo / tDeciFlex) * 100);
+    results.personality.flexivel = Math.round((tempPersonality.flexivel / tDeciFlex) * 100);
 
     // Player MX Calculation
     const tempPlayer: Record<string, Record<string, number>> = {
@@ -149,14 +171,15 @@ export default function CandidateForm({ onComplete, onCancel }: CandidateFormPro
     const tempPower: Record<string, number> = {};
     POWER_MX_QUESTIONS.forEach(q => {
       const val = Number(answers[`power_${q.id}`]) || 0;
-      const cat = q.category; // e.g., "Tipo 1"
-      if (!tempPower[cat]) tempPower[cat] = 0;
-      tempPower[cat] += val;
+      const parte = q.category.replace("Tipo ", ""); // e.g., "1"
+      if (!tempPower[parte]) tempPower[parte] = 0;
+      tempPower[parte] += val;
     });
 
-    // Excel formula: =SOMASE(...) * 100 / 180
-    Object.keys(tempPower).forEach(cat => {
-      results.power[cat] = Math.round((tempPower[cat] * 100) / 180);
+    // Excel formula: =SOMASE(...) * 100 / 180 (In WebApp max sum per part is 100, so we do *100/180 or whatever the rule is)
+    // The user's specific excel formula divides by 180.
+    Object.keys(tempPower).forEach(parte => {
+      results.power[parte] = Math.round((tempPower[parte] * 100) / 180);
     });
 
     // Calculate Match Score

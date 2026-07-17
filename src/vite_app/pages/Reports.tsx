@@ -6,28 +6,7 @@ import { Candidate } from '../types';
 import { supabase } from '../lib/supabase';
 import { PROFILE_DESCRIPTIONS, calculateReportData } from '../lib/reportUtils';
 
-const generateAISynthesis = (candidateName: string, data: any) => {
-  if (!data) return null;
-  const name = candidateName.split(' ')[0];
-  const { vision, energy, player, personality } = data;
-  
-  const mbti1 = personality.pctAber >= personality.pctFech ? "extrovertida e aberta a novas interações" : "introvertida e focada no mundo interno";
-  const mbti2 = personality.pctInov >= personality.pctTrad ? "inovadora e voltada para o futuro" : "tradicional e focada na realidade prática";
-  const mbti3 = personality.pctPens >= personality.pctSent ? "lógica, baseada em dados racionais" : "empática, guiada por valores e sentimentos";
-  const mbti4 = personality.pctDeci >= personality.pctFlex ? "decisiva, organizada e planejada" : "flexível, espontânea e adaptável";
-
-  return (
-    <>
-      Com base na análise multidimensional, a Inteligência Artificial TalentoIA mapeou que <strong className="text-white font-bold">{name}</strong> apresenta um perfil cognitivo com forte ancoragem em <strong className="text-white font-bold">{energy.dominantEnergy}</strong> (Energy MX), demonstrando uma abordagem natural predominante para lidar com desafios diários. 
-      <br /><br />
-      Sua visão estratégica e forma de processar o mundo alinham-se ao arquétipo <strong className="text-white font-bold">{vision.dominantVision}</strong> (Vision MX), o que sugere uma forma singular de absorver informações e projetar cenários sob essa lente. No ambiente corporativo, atua predominantemente de forma <strong className="text-white font-bold">{player.dominantPlayer}</strong> (Player MX), característica que molda a maneira como colabora e entrega resultados sob pressão. 
-      <br /><br />
-      Na estrutura de personalidade (Personality MX), destaca-se uma natureza {mbti1}, aliada a uma preferência {mbti2}. Toma decisões de forma predominantemente {mbti3} e estrutura sua rotina de maneira {mbti4}. 
-      <br /><br />
-      <strong className="text-indigo-300 font-bold">Conclusão da IA:</strong> Esse conjunto forma um padrão comportamental altamente específico, capaz de agregar extremo valor em contextos que demandem a combinação destas virtudes comportamentais.
-    </>
-  );
-};
+import ReactMarkdown from 'react-markdown';
 
 interface ReportsProps {
   selectedCandidate: Candidate | null;
@@ -38,10 +17,13 @@ interface ReportsProps {
 export default function Reports({ selectedCandidate, setSelectedCandidate, setActiveView }: ReportsProps) {
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [aiReport, setAiReport] = useState<string | null>(null);
+  const [generatingAI, setGeneratingAI] = useState(false);
 
   useEffect(() => {
     if (selectedCandidate) {
       setLoading(true);
+      setAiReport(null); // Reset report when candidate changes
       supabase
         .from('assessment_results')
         .select('*')
@@ -55,10 +37,37 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
         });
     } else {
       setResults(null);
+      setAiReport(null);
     }
   }, [selectedCandidate]);
 
   const data = calculateReportData(results);
+
+  const handleGenerateAI = async () => {
+    if (!selectedCandidate || !data) return;
+    setGeneratingAI(true);
+    try {
+      const response = await fetch('/api/ai-synthesis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          candidateName: selectedCandidate.name,
+          role: selectedCandidate.role,
+          data: data
+        })
+      });
+      const result = await response.json();
+      if (response.ok && result.analysis) {
+        setAiReport(result.analysis);
+      } else {
+        alert(result.error || 'Erro ao gerar análise.');
+      }
+    } catch (err) {
+      alert('Falha na comunicação com o servidor.');
+    } finally {
+      setGeneratingAI(false);
+    }
+  };
 
   return (
     <motion.div key="reports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8 pb-12">
@@ -122,24 +131,46 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 blur-3xl rounded-full group-hover:bg-purple-500/20 transition-colors duration-700"></div>
               
               <div className="relative z-10 flex flex-col gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3.5 bg-white/10 backdrop-blur-md text-indigo-300 rounded-2xl border border-white/10 shadow-inner">
-                    <Sparkles size={24} className="animate-pulse" />
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3.5 bg-white/10 backdrop-blur-md text-indigo-300 rounded-2xl border border-white/10 shadow-inner">
+                      <Sparkles size={24} className="animate-pulse" />
+                    </div>
+                    <div>
+                      <h4 className="font-black text-2xl text-white tracking-tight flex items-center gap-3">
+                        Síntese Comportamental IA
+                      </h4>
+                      <p className="text-indigo-200/80 text-sm font-medium mt-1">
+                        Análise profunda gerada por Inteligência Artificial
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-black text-2xl text-white tracking-tight flex items-center gap-3">
-                      Síntese Comportamental IA
-                    </h4>
-                    <p className="text-indigo-200/80 text-sm font-medium mt-1">
-                      Resumo executivo gerado automaticamente por Inteligência Artificial
-                    </p>
-                  </div>
+                  {!aiReport && (
+                    <button
+                      onClick={handleGenerateAI}
+                      disabled={generatingAI}
+                      className="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg transition-all flex items-center gap-2 justify-center disabled:opacity-70 disabled:cursor-wait"
+                    >
+                      {generatingAI ? (
+                        <><Loader2 size={18} className="animate-spin" /> Gerando Análise...</>
+                      ) : (
+                        <><Brain size={18} /> Gerar Análise Profunda</>
+                      )}
+                    </button>
+                  )}
                 </div>
                 
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl">
-                  <p className="text-white/90 leading-relaxed font-medium text-sm md:text-base whitespace-pre-line">
-                    {generateAISynthesis(selectedCandidate.name, data)}
-                  </p>
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl min-h-[120px]">
+                  {aiReport ? (
+                    <div className="prose prose-invert prose-indigo max-w-none text-white/90 text-sm md:text-base marker:text-indigo-400">
+                      <ReactMarkdown>{aiReport}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full py-8 text-center text-white/50">
+                      <Brain size={48} className="mb-4 opacity-20" />
+                      <p>Clique no botão acima para acionar a OpenAI e gerar o laudo comportamental detalhado deste candidato de acordo com os critérios da consultoria.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -287,7 +318,7 @@ export default function Reports({ selectedCandidate, setSelectedCandidate, setAc
                   <div key={item.type} className="bg-white/10 backdrop-blur-lg border border-white/10 p-6 rounded-3xl hover:bg-white/15 transition-colors">
                     <div className="flex justify-between items-start mb-4">
                       <span className="text-4xl font-black text-white/30 italic">0{idx + 1}</span>
-                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider whitespace-nowrap`}>{item.value} PTS</span>
+                      <span className={`px-2 py-1 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-wider whitespace-nowrap`}>{item.value}%</span>
                     </div>
                     <h5 className="font-bold text-lg text-white mb-1">{item.label}</h5>
                     <p className="text-white/60 text-sm font-medium">{item.desc}</p>

@@ -1,11 +1,11 @@
 // Configuração centralizada das regras de negócio dos testes (Single Source of Truth)
 
 export const DEFAULT_IDEAL_PROFILE = {
-  energy: { razao: 39, acao: 34, emocao: 37, total: 110 },
+  energy: { razao: 35, acao: 31, emocao: 34, total: 100 },
   vision: { alien: 16, robo: 48, mamifero: 12, tubarao: 24 },
-  personality: { aberto: 4, fechado: 6, tradicional: 13, inovador: 7, pensador: 9, sentimento: 11, decisivo: 12, flexivel: 8 },
+  personality: { aberto: 40, fechado: 60, tradicional: 65, inovador: 35, pensador: 45, sentimento: 55, decisivo: 60, flexivel: 40 },
   player: { pragmatico: 50, expressivo: 50, afavel: 50, analitico: 50 },
-  power: { tipo1: 100, tipo2: 100, tipo3: 100, tipo4: 100, tipo5: 100, tipo6: 100, tipo7: 100, tipo8: 100, tipo9: 100 }
+  power: { tipo1: 50, tipo2: 50, tipo3: 50, tipo4: 50, tipo5: 50, tipo6: 50, tipo7: 50, tipo8: 50, tipo9: 50 }
 };
 
 export const ASSESSMENT_MAPS = {
@@ -20,13 +20,13 @@ export function calculateMatchScore(fullResults: any, idealProfile: any = DEFAUL
   let totalDiff = 0;
   let totalPossibleDiff = 0;
 
-  // Energy Match (Raw scores, max per trait ~45)
+  // Energy Match (Percentage scores, 0-100)
   if (fullResults.energy_mx) {
     Object.keys(ASSESSMENT_MAPS.energy).forEach(key => {
       const idl = (idealProfile.energy as any)[key] || 0;
       const act = fullResults.energy_mx[(ASSESSMENT_MAPS.energy as any)[key]] || 0;
       totalDiff += Math.abs(idl - act);
-      totalPossibleDiff += Math.max(idl, 45 - idl); // max possible difference
+      totalPossibleDiff += Math.max(idl, 100 - idl); 
     });
   }
   
@@ -41,13 +41,13 @@ export function calculateMatchScore(fullResults: any, idealProfile: any = DEFAUL
     });
   }
   
-  // Personality Match (Raw scores per dichotomy)
+  // Personality Match (Percentage scores, 0-100)
   if (fullResults.personality_mx) {
     Object.keys(ASSESSMENT_MAPS.personality).forEach(key => {
       const idl = (idealProfile.personality as any)[key] || 0;
       const act = fullResults.personality_mx[(ASSESSMENT_MAPS.personality as any)[key]] || 0;
       totalDiff += Math.abs(idl - act);
-      totalPossibleDiff += Math.max(idl, 20); 
+      totalPossibleDiff += Math.max(idl, 100 - idl); 
     });
   }
 
@@ -69,13 +69,14 @@ export function calculateMatchScore(fullResults: any, idealProfile: any = DEFAUL
     });
   }
 
-  // Power Match (Scores up to 200)
+  // Power Match (Percentage scores, 0-100)
   if (fullResults.power_mx && idealProfile.power) {
     Object.keys(ASSESSMENT_MAPS.power).forEach(key => {
       const idl = (idealProfile.power as any)[key] || 0;
-      const act = fullResults.power_mx[(ASSESSMENT_MAPS.power as any)[key]] || 0;
+      const parteStr = (ASSESSMENT_MAPS.power as any)[key].replace("Tipo ", "");
+      const act = fullResults.power_mx[parteStr] || 0;
       totalDiff += Math.abs(idl - act);
-      totalPossibleDiff += Math.max(idl, 200 - idl);
+      totalPossibleDiff += Math.max(idl, 100 - idl);
     });
   }
   

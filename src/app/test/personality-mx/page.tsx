@@ -72,6 +72,23 @@ function PersonalityMxContent() {
       }
     });
 
+    // Convert to percentages
+    const tAberFech = (results.Aberto + results.Fechado) || 11;
+    results.Aberto = Math.round((results.Aberto / tAberFech) * 100);
+    results.Fechado = Math.round((results.Fechado / tAberFech) * 100);
+
+    const tTradInov = (results.Tradicional + results.Inovador) || 21;
+    results.Tradicional = Math.round((results.Tradicional / tTradInov) * 100);
+    results.Inovador = Math.round((results.Inovador / tTradInov) * 100);
+
+    const tPensSent = (results.Pensador + results.Sentimento) || 18;
+    results.Pensador = Math.round((results.Pensador / tPensSent) * 100);
+    results.Sentimento = Math.round((results.Sentimento / tPensSent) * 100);
+
+    const tDeciFlex = (results.Decisivo + results.Flexível) || 20;
+    results.Decisivo = Math.round((results.Decisivo / tDeciFlex) * 100);
+    results.Flexível = Math.round((results.Flexível / tDeciFlex) * 100);
+
     return results;
   };
 
