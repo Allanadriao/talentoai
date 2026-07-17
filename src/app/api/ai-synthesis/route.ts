@@ -13,12 +13,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { candidateName, data, role } = body;
 
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: 'Chave da API da OpenAI não está configurada no servidor (OPENAI_API_KEY).' },
-        { status: 500 }
-      );
-    }
+
 
     if (!candidateName || !data) {
       return NextResponse.json(
