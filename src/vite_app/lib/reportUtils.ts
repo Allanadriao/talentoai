@@ -1,3 +1,5 @@
+import { personalityMxQuestions } from '@/data/personalityMx';
+
 export const PROFILE_DESCRIPTIONS = {
   vision: {
     Alien: "Sente-se deslocado ou desconectado do ambiente convencional. Possui criatividade intensa com ideias originais e inovadoras, e uma visão alternativa que questiona normas estabelecidas. Pode precisar de suporte para traduzir ideias para a prática.",
@@ -94,13 +96,52 @@ export function calculateReportData(results: any) {
 
   // Personality MX
   const personality = results.personality_mx || {};
-  const pAber = parseRaw(personality.Aberto ?? personality.aberto); const pFech = parseRaw(personality.Fechado ?? personality.fechado);
+  
+  let pAber = 0, pFech = 0;
+  let pTrad = 0, pInov = 0;
+  let pPens = 0, pSent = 0;
+  let pDeci = 0, pFlex = 0;
+
+  if (personality.fromScale && results.raw_answers?.personality_mx) {
+    const rawAnswers = results.raw_answers.personality_mx;
+    
+    personalityMxQuestions.forEach((q: any) => {
+      const val = rawAnswers[q.id];
+      if (val !== undefined) {
+        // val is from 1 to 10
+        // 1 means strongly leftTrait (options[0]), 10 means strongly rightTrait (options[1])
+        const leftScore = 11 - val;
+        const rightScore = val;
+        
+        const applyScore = (trait: string, score: number) => {
+          if (trait === 'Aberto') pAber += score;
+          else if (trait === 'Fechado') pFech += score;
+          else if (trait === 'Tradicional') pTrad += score;
+          else if (trait === 'Inovador') pInov += score;
+          else if (trait === 'Pensador') pPens += score;
+          else if (trait === 'Sentimento') pSent += score;
+          else if (trait === 'Decisivo') pDeci += score;
+          else if (trait === 'Flexível') pFlex += score;
+        };
+        
+        applyScore(q.options[0].trait, leftScore);
+        applyScore(q.options[1].trait, rightScore);
+      }
+    });
+  } else {
+    pAber = parseRaw(personality.Aberto ?? personality.aberto); 
+    pFech = parseRaw(personality.Fechado ?? personality.fechado);
+    pTrad = parseRaw(personality.Tradicional ?? personality.tradicional); 
+    pInov = parseRaw(personality.Inovador ?? personality.inovador);
+    pPens = parseRaw(personality.Pensador ?? personality.pensador); 
+    pSent = parseRaw(personality.Sentimento ?? personality.sentimento);
+    pDeci = parseRaw(personality.Decisivo ?? personality.decisivo); 
+    pFlex = parseRaw(personality.Flexível ?? personality.flexivel);
+  }
+
   const tAberFech = (pAber + pFech) || 11;
-  const pTrad = parseRaw(personality.Tradicional ?? personality.tradicional); const pInov = parseRaw(personality.Inovador ?? personality.inovador);
   const tTradInov = (pTrad + pInov) || 21;
-  const pPens = parseRaw(personality.Pensador ?? personality.pensador); const pSent = parseRaw(personality.Sentimento ?? personality.sentimento);
   const tPensSent = (pPens + pSent) || 18;
-  const pDeci = parseRaw(personality.Decisivo ?? personality.decisivo); const pFlex = parseRaw(personality.Flexível ?? personality.flexivel);
   const tDeciFlex = (pDeci + pFlex) || 20;
 
   // Player MX
