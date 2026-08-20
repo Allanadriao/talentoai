@@ -1,6 +1,8 @@
 import { personalityMxQuestions } from '@/data/personalityMx';
 import { energyMxQuestions } from '@/data/energyMx';
 import { playerMxQuestions } from '@/data/playerMx';
+import { visionMxQuestions } from '@/data/visionMx';
+import { powerMxQuestions } from '@/data/powerMx';
 
 export const PROFILE_DESCRIPTIONS = {
   vision: {
@@ -40,19 +42,42 @@ export function calculateReportData(results: any) {
   };
 
   // Vision MX
-  const vision = results.vision_mx || {};
-  let vAlien = parsePct(vision.Alien ?? vision.alien);
-  let vRobo = parsePct(vision.Robô ?? vision.robo);
-  let vMamifero = parsePct(vision.Mamífero ?? vision.mamifero);
-  let vTubarao = parsePct(vision.Tubarão ?? vision.tubarao);
-
-  if (vAlien <= 25 && vRobo <= 25 && vMamifero <= 25 && vTubarao <= 25 && (vAlien + vRobo + vMamifero + vTubarao) <= 25 && (vAlien + vRobo + vMamifero + vTubarao) > 0) {
-    vAlien = Math.round((vAlien / 25) * 100);
-    vRobo = Math.round((vRobo / 25) * 100);
-    vMamifero = Math.round((vMamifero / 25) * 100);
-    vTubarao = Math.round((vTubarao / 25) * 100);
-  }
+  let vAlien = 0, vRobo = 0, vMamifero = 0, vTubarao = 0;
   
+  if (results.raw_answers?.vision_mx) {
+    const rawAnswers = results.raw_answers.vision_mx;
+    Object.entries(rawAnswers).forEach(([qId, optionId]) => {
+      const q = visionMxQuestions.find((q: any) => q.id === Number(qId));
+      if (q) {
+        const opt = q.options.find((o: any) => o.id === optionId);
+        if (opt) {
+          if (opt.profile === 'Alien') vAlien++;
+          else if (opt.profile === 'Robô') vRobo++;
+          else if (opt.profile === 'Mamífero') vMamifero++;
+          else if (opt.profile === 'Tubarão') vTubarao++;
+        }
+      }
+    });
+    const totalQs = visionMxQuestions.length || 25;
+    vAlien = Math.round((vAlien / totalQs) * 100);
+    vRobo = Math.round((vRobo / totalQs) * 100);
+    vMamifero = Math.round((vMamifero / totalQs) * 100);
+    vTubarao = Math.round((vTubarao / totalQs) * 100);
+  } else {
+    const vision = results.vision_mx || {};
+    vAlien = parseRaw(vision.Alien ?? vision.alien);
+    vRobo = parseRaw(vision.Robô ?? vision.robo);
+    vMamifero = parseRaw(vision.Mamífero ?? vision.mamifero);
+    vTubarao = parseRaw(vision.Tubarão ?? vision.tubarao);
+    // Compatibility if stored as 0-1 values instead of percentages
+    if (vAlien < 2 && vRobo < 2 && vMamifero < 2 && vTubarao < 2) {
+      vAlien = Math.round((vAlien / 25) * 100);
+      vRobo = Math.round((vRobo / 25) * 100);
+      vMamifero = Math.round((vMamifero / 25) * 100);
+      vTubarao = Math.round((vTubarao / 25) * 100);
+    }
+  }
+
   const vMax = Math.max(vAlien, vRobo, vMamifero, vTubarao);
   let dominantVision = "Tubarão";
   let dominantVisionColor = "from-sky-400 to-sky-600";
@@ -90,7 +115,25 @@ export function calculateReportData(results: any) {
   else if (eEmocao === eMaxScore) { dominantEnergy = "Emoção"; dominantEnergyColor = "from-rose-400 to-rose-600"; }
 
   // Power MX
-  const power = results.power_mx || {};
+  let power = results.power_mx || {};
+  if (results.raw_answers?.power_mx) {
+    const rawAnswers = results.raw_answers.power_mx;
+    const rawPower: Record<string, number> = {
+      "Tipo 1": 0, "Tipo 2": 0, "Tipo 3": 0, "Tipo 4": 0, "Tipo 5": 0,
+      "Tipo 6": 0, "Tipo 7": 0, "Tipo 8": 0, "Tipo 9": 0
+    };
+    Object.entries(rawAnswers).forEach(([qId, value]) => {
+      const q = powerMxQuestions.find((q: any) => q.id === Number(qId));
+      if (q && q.parte >= 1 && q.parte <= 9) {
+        rawPower[`Tipo ${q.parte}`] += Number(value) || 0;
+      }
+    });
+    Object.keys(rawPower).forEach(key => {
+      rawPower[key] = Math.round((rawPower[key] * 100) / 180);
+    });
+    power = rawPower;
+  }
+
   const powerMap: Record<string, { label: string, desc: string }> = {
     "Tipo 1": { label: "O Perfeccionista", desc: "Responsabilidade e disciplina" },
     "Tipo 2": { label: "O Doador", desc: "Amoroso, generoso, prestativo" },
