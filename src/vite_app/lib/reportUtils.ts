@@ -1,4 +1,6 @@
 import { personalityMxQuestions } from '@/data/personalityMx';
+import { energyMxQuestions } from '@/data/energyMx';
+import { playerMxQuestions } from '@/data/playerMx';
 
 export const PROFILE_DESCRIPTIONS = {
   vision: {
@@ -59,11 +61,26 @@ export function calculateReportData(results: any) {
   else if (vMamifero === vMax) { dominantVision = "Mamífero"; dominantVisionColor = "from-emerald-400 to-emerald-600"; }
 
   // Energy MX
-  const energy = results.energy_mx || {};
-  const eRazao = parseRaw(energy.Razão ?? energy.razao);
-  const eAcao = parseRaw(energy.Ação ?? energy.acao);
-  const eEmocao = parseRaw(energy.Emoção ?? energy.emocao);
-  const eTotal = parseRaw(energy.Energia ?? energy.total) || (eRazao + eAcao + eEmocao);
+  let eRazao = 0, eAcao = 0, eEmocao = 0;
+  
+  if (results.raw_answers?.energy_mx) {
+    const rawAnswers = results.raw_answers.energy_mx;
+    Object.entries(rawAnswers).forEach(([qId, value]) => {
+      const q = energyMxQuestions.find((q: any) => q.id === Number(qId));
+      if (q) {
+        if (q.profile === 'Razão') eRazao += (value as number);
+        else if (q.profile === 'Ação') eAcao += (value as number);
+        else if (q.profile === 'Emoção') eEmocao += (value as number);
+      }
+    });
+  } else {
+    const energy = results.energy_mx || {};
+    eRazao = parseRaw(energy.Razão ?? energy.razao);
+    eAcao = parseRaw(energy.Ação ?? energy.acao);
+    eEmocao = parseRaw(energy.Emoção ?? energy.emocao);
+  }
+
+  const eTotal = eRazao + eAcao + eEmocao;
   const eMax = 135; 
   
   const eMaxScore = Math.max(eRazao, eAcao, eEmocao);
@@ -145,27 +162,82 @@ export function calculateReportData(results: any) {
   const tDeciFlex = (pDeci + pFlex) || 20;
 
   // Player MX
-  const player = results.player_mx || {};
-  const getRawPct = (prof: string, ctx: string) => {
-    const normProf = prof.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const normCtx = ctx.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const valStr = player[prof]?.[ctx] ?? player[normCtx]?.[normProf] ?? player[ctx]?.[normProf] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0';
-    return parsePct(valStr);
-  };
+  let pAparente = { expressivo: 0, pragmatico: 0, afavel: 0, analitico: 0 };
+  let pAtual = { expressivo: 0, pragmatico: 0, afavel: 0, analitico: 0 };
+  let pPressao = { expressivo: 0, pragmatico: 0, afavel: 0, analitico: 0 };
 
-  const pAtual = {
-    Expressivo: getRawPct('Expressivo', 'atual'),
-    Pragmático: getRawPct('Pragmático', 'atual'),
-    Afável: getRawPct('Afável', 'atual'),
-    Analítico: getRawPct('Analítico', 'atual')
-  };
+  if (results.raw_answers?.player_mx) {
+    const rawAnswers = results.raw_answers.player_mx;
+    
+    let counts = {
+      aparente: { Expressivo: 0, Pragmático: 0, Afável: 0, Analítico: 0 },
+      atual: { Expressivo: 0, Pragmático: 0, Afável: 0, Analítico: 0 },
+      pressão: { Expressivo: 0, Pragmático: 0, Afável: 0, Analítico: 0 }
+    } as any;
+    
+    let totals = { aparente: 0, atual: 0, pressão: 0 } as any;
+    
+    Object.entries(rawAnswers).forEach(([qId, profile]) => {
+       const q = playerMxQuestions.find((q: any) => q.id === Number(qId));
+       if (q) {
+          counts[q.context][profile as string] += 1;
+          totals[q.context] += 1;
+       }
+    });
+    
+    const calcContextPcts = (c: any, total: number) => {
+      if (total === 0) return { expressivo: 0, pragmatico: 0, afavel: 0, analitico: 0 };
+      const exp = Math.round((c.Expressivo / total) * 100);
+      const pra = Math.round((c.Pragmático / total) * 100);
+      const afa = Math.round((c.Afável / total) * 100);
+      const ana = 100 - (exp + pra + afa);
+      // To prevent negative values in edge cases (though mathematically impossible if counts sum to total)
+      return {
+        expressivo: exp,
+        pragmatico: pra,
+        afavel: afa,
+        analitico: Math.max(0, ana)
+      };
+    };
+
+    pAparente = calcContextPcts(counts.aparente, totals.aparente);
+    pAtual = calcContextPcts(counts.atual, totals.atual);
+    pPressao = calcContextPcts(counts.pressão, totals.pressão);
+  } else {
+    const player = results.player_mx || {};
+    const getRawPct = (prof: string, ctx: string) => {
+      const normProf = prof.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const normCtx = ctx.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const valStr = player[prof]?.[ctx] ?? player[normCtx]?.[normProf] ?? player[ctx]?.[normProf] ?? player[ctx]?.[prof.toLowerCase()] ?? player[ctx]?.[prof] ?? '0';
+      return parsePct(valStr);
+    };
+
+    pAtual = {
+      expressivo: getRawPct('Expressivo', 'atual'),
+      pragmatico: getRawPct('Pragmático', 'atual'),
+      afavel: getRawPct('Afável', 'atual'),
+      analitico: getRawPct('Analítico', 'atual')
+    };
+    pAparente = { 
+      expressivo: getRawPct('Expressivo', 'aparente'), 
+      pragmatico: getRawPct('Pragmático', 'aparente'), 
+      afavel: getRawPct('Afável', 'aparente'), 
+      analitico: getRawPct('Analítico', 'aparente') 
+    };
+    pPressao = { 
+      expressivo: getRawPct('Expressivo', 'pressão'), 
+      pragmatico: getRawPct('Pragmático', 'pressão'), 
+      afavel: getRawPct('Afável', 'pressão'), 
+      analitico: getRawPct('Analítico', 'pressão') 
+    };
+  }
   
-  const maxPlayerPct = Math.max(pAtual.Expressivo, pAtual.Pragmático, pAtual.Afável, pAtual.Analítico);
+  const maxPlayerPct = Math.max(pAtual.expressivo, pAtual.pragmatico, pAtual.afavel, pAtual.analitico);
   let dominantPlayer = "Pragmático";
   let dominantPlayerColor = "from-orange-400 to-orange-600";
-  if (pAtual.Expressivo === maxPlayerPct) { dominantPlayer = "Expressivo"; dominantPlayerColor = "from-rose-400 to-rose-600"; }
-  else if (pAtual.Afável === maxPlayerPct) { dominantPlayer = "Afável"; dominantPlayerColor = "from-emerald-400 to-emerald-600"; }
-  else if (pAtual.Analítico === maxPlayerPct) { dominantPlayer = "Analítico"; dominantPlayerColor = "from-indigo-400 to-indigo-600"; }
+  if (pAtual.expressivo === maxPlayerPct) { dominantPlayer = "Expressivo"; dominantPlayerColor = "from-rose-400 to-rose-600"; }
+  else if (pAtual.afavel === maxPlayerPct) { dominantPlayer = "Afável"; dominantPlayerColor = "from-emerald-400 to-emerald-600"; }
+  else if (pAtual.analitico === maxPlayerPct) { dominantPlayer = "Analítico"; dominantPlayerColor = "from-indigo-400 to-indigo-600"; }
 
   return {
     vision: { vAlien, vRobo, vMamifero, vTubarao, dominantVision, dominantVisionColor },
@@ -179,14 +251,9 @@ export function calculateReportData(results: any) {
     },
     player: {
       dominantPlayer, dominantPlayerColor,
-      aparente: { expressivo: getRawPct('Expressivo', 'aparente'), pragmatico: getRawPct('Pragmático', 'aparente'), afavel: getRawPct('Afável', 'aparente'), analitico: getRawPct('Analítico', 'aparente') },
-      atual: {
-        expressivo: pAtual.Expressivo,
-        pragmatico: pAtual.Pragmático,
-        afavel: pAtual.Afável,
-        analitico: pAtual.Analítico
-      },
-      pressao: { expressivo: getRawPct('Expressivo', 'pressão'), pragmatico: getRawPct('Pragmático', 'pressão'), afavel: getRawPct('Afável', 'pressão'), analitico: getRawPct('Analítico', 'pressão') }
+      aparente: pAparente,
+      atual: pAtual,
+      pressao: pPressao
     }
   };
 }
