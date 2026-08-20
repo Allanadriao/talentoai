@@ -36,22 +36,22 @@ Cargo Atual / Pretendido: ${role || 'Não especificado'}
 
 DADOS DA AVALIAÇÃO:
 1. ENERGY MX
-- Razão: ${data.energy.razao}
-- Ação: ${data.energy.acao}
-- Emoção: ${data.energy.emocao}
-- Total: ${data.energy.total}
+- Razão: ${data.energy.eRazao}
+- Ação: ${data.energy.eAcao}
+- Emoção: ${data.energy.eEmocao}
+- Total: ${data.energy.eTotal}
 
 2. VISION MX
-- Alien: ${data.vision.alien}%
-- Robô: ${data.vision.robo}%
-- Mamífero: ${data.vision.mamifero}%
-- Tubarão: ${data.vision.tubarao}%
+- Alien: ${data.vision.vAlien}%
+- Robô: ${data.vision.vRobo}%
+- Mamífero: ${data.vision.vMamifero}%
+- Tubarão: ${data.vision.vTubarao}%
 
 3. PERSONALITY MX
-- Aberto: ${data.personality.aberto}% | Fechado: ${data.personality.fechado}%
-- Tradicional: ${data.personality.tradicional}% | Inovador: ${data.personality.inovador}%
-- Pensador: ${data.personality.pensador}% | Sentimento: ${data.personality.sentimento}%
-- Decisivo: ${data.personality.decisivo}% | Flexível: ${data.personality.flexivel}%
+- Aberto: ${data.personality.pctAber}% | Fechado: ${data.personality.pctFech}%
+- Tradicional: ${data.personality.pctTrad}% | Inovador: ${data.personality.pctInov}%
+- Pensador: ${data.personality.pctPens}% | Sentimento: ${data.personality.pctSent}%
+- Decisivo: ${data.personality.pctDeci}% | Flexível: ${data.personality.pctFlex}%
 
 4. PLAYER MX (Comportamento Atual - Média Geral)
 - Pragmático: ${data.player.atual.pragmatico}%
